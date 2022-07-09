@@ -34,11 +34,7 @@ public:
 
             cout << "This was run" << endl;
 
-            while (checker == true)
-            {
-                verticalChecker();
-                countRow = countRow-1;
-            }
+          
 
 
         }
@@ -105,14 +101,14 @@ public:
 
     void verticalChecker()
     {
-        checker = false;
+     
         for (int column = 0; column < 4; column++)
         {
-            for (int first = 0; first < 4; first++)
+            for (int first = 0; first < 3; first++)
             {
                 for (int second = first + 1; second < 4; second++)
                 {
-                    if (first!= second && arrayNumbers[first][column] == arrayNumbers[second][column])
+                    if (arrayNumbers[first][column] == arrayNumbers[second][column])
                     {
                         cout << "column: " << column << endl; //DEBUGGER
                         cout << "first: " << first << endl; //DEBUGGER
@@ -120,7 +116,10 @@ public:
                         gridDisplay();
                         horizontalAssignment(second); //start from the x, end at that x on the why y axis.
                         gridDisplay();
-                        checker = false;
+                        
+                        column = 0;
+                        first = 0;
+                        second = 1;
                        
                        
                     }
