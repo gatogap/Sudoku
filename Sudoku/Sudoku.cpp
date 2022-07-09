@@ -12,9 +12,6 @@ private:
     int index = 0;
     int arrayNumbers[4][4];
     int arrayBlanks[30][30];
-    
-    
-
 
 public:
     void start() //should this be your constructor
@@ -22,40 +19,26 @@ public:
         srand(time(NULL));
         cout << "    Let's begin your 9x9 grid!" << endl << endl << endl << endl;
         horizontalAssignment(0,0); //first row should be fine bc if will be the first array we will have to compare
-
+        
         for (int countRow = 1; countRow < 4; countRow++)
         {
             cout << countRow << endl;
             
             horizontalAssignment(countRow,0); //countRow is the line that will be compared with all the previous ones
             verticalChecker();
-
             cout << "This was run" << endl;
-
-        }     
+        }    
         gridDisplay();
-
     }
 
     void horizontalAssignment(int row, int column) //at start, should be equal to zero
     {
         int index1 = 0; //horizontal
+        int horizontal[4] = { 1,2,3,4 };
+        int a = 0;
+      
+            /*------START OF ROW HERE-----*/
 
-        //cout << "~~~~~~~START OF ROUND~~~~~~~~" << endl; DEBUGGER
-        
-
-        //while (b < 1) //row - y axis. b would give its starting y/row in which repition should be prevented
-        //{
-
-            int horizontal[4] = { 1,2,3,4 };
-
-            int a = 0;
-            
-            
-            
-
-            /*------START OF ROW HERE---- - */
-            a = 0;
             while (a < 4) //column - x axis
             {
                 index1 = rand() % 4;
@@ -72,17 +55,9 @@ public:
                     horizontal[index1] = 0;
                    
                     a++;
-                }
-                
+                }           
             }
-            
-            //b++;
-       // }
-
-        //cout << "~~~~~~~END OF ROUND~~~~~~~~" << endl; DEBUGGER
     }
-
-
 
     void verticalChecker()
     {
@@ -95,17 +70,11 @@ public:
                 {
                     if (arrayNumbers[firstRow][column] == arrayNumbers[secondRow][column])
                     {
-                        cout << "column: " << column << endl; //DEBUGGER
-                        cout << "first: " << firstRow << endl; //DEBUGGER
-                        cout << "second: " << secondRow << endl << endl; //DEBUGGER
-                        gridDisplay();
-                        horizontalAssignment(secondRow,column); //start from the x, end at that x on the why y axis.
-                        gridDisplay();
+                        horizontalAssignment(secondRow,column);
                         
                         column = 0;
                         firstRow = 0;
                         secondRow = 1;
-                       
                        
                     }
                 }
@@ -114,18 +83,16 @@ public:
         
     }
 
-
-
     void gridDisplay()
     {
-        int i = 0; //column
-        int j = 0; //row
+        int i = 0; //column (x-axis)
+        int j = 0; //row (y-axis)
 
 
-        while (j < 4) //row
+        while (j < 4) //row (x-axis)
         {
             cout << " ";
-            while (i < 3) //column
+            while (i < 3) //column (y-axis)
             {
                 cout << arrayNumbers[j][i] << " | ";
                 i++;
