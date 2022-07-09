@@ -10,7 +10,7 @@ class gamePreparation
 {
 private:
     int index = 0;
-    int arrayNumbers[4][4];
+    int arrayNumbers[9][9];
     int arrayBlanks[30][30];
 
 public:
@@ -20,13 +20,14 @@ public:
         cout << "    Let's begin your 9x9 grid!" << endl << endl << endl << endl;
         horizontalAssignment(0,0); 
         
-        for (int countRow = 1; countRow < 4; countRow++)
+        for (int countRow = 1; countRow < 9; countRow++)
         {
             cout << countRow << endl;
             
             horizontalAssignment(countRow,0); //countRow is the line that will be compared with all the previous lines
-            verticalChecker();
             cout << "This was run" << endl;
+            verticalChecker();
+            
         }    
         gridDisplay();
     }
@@ -34,19 +35,19 @@ public:
     void horizontalAssignment(int row, int column) //at start, should be equal to zero
     {
         int index1 = 0; //horizontal
-        int horizontal[4] = { 1,2,3,4 };
+        int horizontal[9] = { 1,2,3,4,5,6,7,8,9 };
         int a = 0;
       
             /*------START OF ROW HERE-----*/
 
-            while (a < 4) //column - x axis
+            while (a < 9) //column - x axis
             {
-                index1 = rand() % 4;
+                index1 = rand() % 9;
                 
 
                 while (horizontal[index1] == 0 )
                 {
-                    index1 = rand() % 4;
+                    index1 = rand() % 9;
                 }
 
                 if (horizontal[index1] != 0 )
@@ -62,15 +63,17 @@ public:
     void verticalChecker()
     {
      
-        for (int column = 0; column < 4; column++)
+        for (int column = 0; column < 9; column++)
         {
-            for (int firstRow = 0; firstRow < 3; firstRow++)
+            for (int firstRow = 0; firstRow < 8; firstRow++)
             {
-                for (int secondRow = firstRow + 1; secondRow < 4; secondRow++)
+                for (int secondRow = firstRow + 1; secondRow < 9; secondRow++)
                 {
                     if (arrayNumbers[firstRow][column] == arrayNumbers[secondRow][column])
                     {
                         horizontalAssignment(secondRow,column);
+                        gridDisplay();
+
                         
                         column = 0;
                         firstRow = 0;
@@ -89,10 +92,10 @@ public:
         int j = 0; //row (y-axis)
 
 
-        while (j < 4) //row (y-axis)
+        while (j < 9) //row (y-axis)
         {
             cout << " ";
-            while (i < 3) //column (x-axis)
+            while (i < 8) //column (x-axis)
             {
                 cout << arrayNumbers[j][i] << " | ";
                 i++;
@@ -101,7 +104,7 @@ public:
             cout << endl;
 
 
-            if (j < 3)
+            if (j < 8)
             {
                 cout << "-----------------------------------";
             }
