@@ -18,13 +18,13 @@ public:
     {
         srand(time(NULL));
         cout << "    Let's begin your 9x9 grid!" << endl << endl << endl << endl;
-        horizontalAssignment(0,0); //first row should be fine bc if will be the first array we will have to compare
+        horizontalAssignment(0,0); 
         
         for (int countRow = 1; countRow < 4; countRow++)
         {
             cout << countRow << endl;
             
-            horizontalAssignment(countRow,0); //countRow is the line that will be compared with all the previous ones
+            horizontalAssignment(countRow,0); //countRow is the line that will be compared with all the previous lines
             verticalChecker();
             cout << "This was run" << endl;
         }    
@@ -42,7 +42,7 @@ public:
             while (a < 4) //column - x axis
             {
                 index1 = rand() % 4;
-                bool indicator = false;
+                
 
                 while (horizontal[index1] == 0 )
                 {
@@ -89,10 +89,10 @@ public:
         int j = 0; //row (y-axis)
 
 
-        while (j < 4) //row (x-axis)
+        while (j < 4) //row (y-axis)
         {
             cout << " ";
-            while (i < 3) //column (y-axis)
+            while (i < 3) //column (x-axis)
             {
                 cout << arrayNumbers[j][i] << " | ";
                 i++;
