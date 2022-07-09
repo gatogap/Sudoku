@@ -12,10 +12,8 @@ private:
     int index = 0;
     int arrayNumbers[4][4];
     int arrayBlanks[30][30];
-    bool checker = false;
-    //int a = 0;
-    int B = 0;
-
+    
+    
 
 
 public:
@@ -23,34 +21,28 @@ public:
     {
         srand(time(NULL));
         cout << "    Let's begin your 9x9 grid!" << endl << endl << endl << endl;
-        horizontalAssignment(0); //first row should be fine bc if will be the first array we will have to compare
+        horizontalAssignment(0,0); //first row should be fine bc if will be the first array we will have to compare
 
         for (int countRow = 1; countRow < 4; countRow++)
         {
             cout << countRow << endl;
-            srand(time(NULL)); //placement of this MATTERS
-            horizontalAssignment(countRow); //countRow is the line that will be compared with all the previous ones
+            
+            horizontalAssignment(countRow,0); //countRow is the line that will be compared with all the previous ones
             verticalChecker();
 
             cout << "This was run" << endl;
 
-          
-
-
-        }
-
-        
+        }     
         gridDisplay();
 
     }
 
-    void horizontalAssignment(int row) //at start, should be equal to zero
+    void horizontalAssignment(int row, int column) //at start, should be equal to zero
     {
         int index1 = 0; //horizontal
 
         //cout << "~~~~~~~START OF ROUND~~~~~~~~" << endl; DEBUGGER
         
-        int b = 0;
 
         //while (b < 1) //row - y axis. b would give its starting y/row in which repition should be prevented
         //{
@@ -59,20 +51,15 @@ public:
 
             int a = 0;
             
-            /*  INCLUDE THIS IF YOU ARE THINKING TO CHECK ALL PREVIOUS COLUMN SLOTS. not necessary at the moment
-            while (a < 4) //column - x axis
-            {
-                horizontal[a] = 0;
-                a++;
-            };
-            */
+            
+            
 
             /*------START OF ROW HERE---- - */
             a = 0;
             while (a < 4) //column - x axis
             {
                 index1 = rand() % 4;
-                bool indicator1 = false;
+                bool indicator = false;
 
                 while (horizontal[index1] == 0 )
                 {
@@ -82,10 +69,8 @@ public:
                 if (horizontal[index1] != 0 )
                 {
                     arrayNumbers[row][a] = horizontal[index1];
-                 
-                   cout << "Current slot value " << horizontal[index1] << endl;
                     horizontal[index1] = 0;
-                    
+                   
                     a++;
                 }
                 
@@ -104,22 +89,22 @@ public:
      
         for (int column = 0; column < 4; column++)
         {
-            for (int first = 0; first < 3; first++)
+            for (int firstRow = 0; firstRow < 3; firstRow++)
             {
-                for (int second = first + 1; second < 4; second++)
+                for (int secondRow = firstRow + 1; secondRow < 4; secondRow++)
                 {
-                    if (arrayNumbers[first][column] == arrayNumbers[second][column])
+                    if (arrayNumbers[firstRow][column] == arrayNumbers[secondRow][column])
                     {
                         cout << "column: " << column << endl; //DEBUGGER
-                        cout << "first: " << first << endl; //DEBUGGER
-                        cout << "second: " << second << endl << endl; //DEBUGGER
+                        cout << "first: " << firstRow << endl; //DEBUGGER
+                        cout << "second: " << secondRow << endl << endl; //DEBUGGER
                         gridDisplay();
-                        horizontalAssignment(second); //start from the x, end at that x on the why y axis.
+                        horizontalAssignment(secondRow,column); //start from the x, end at that x on the why y axis.
                         gridDisplay();
                         
                         column = 0;
-                        first = 0;
-                        second = 1;
+                        firstRow = 0;
+                        secondRow = 1;
                        
                        
                     }
