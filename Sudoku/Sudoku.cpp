@@ -12,6 +12,7 @@ private:
     int index = 0;
     int arrayNumbers[9][9];
     int arrayBlanks[30][30];
+    int rowChecker = 0;
 
 public:
     void start() //should this be your constructor
@@ -26,6 +27,7 @@ public:
             
             horizontalAssignment(countRow,0); //countRow is the line that will be compared with all the previous lines
             cout << "This was run" << endl;
+            rowChecker = countRow;
             verticalChecker();
             
         }    
@@ -63,11 +65,11 @@ public:
     void verticalChecker()
     {
      
-        for (int column = 0; column < 9; column++)
+        for (int column = 0; column < rowChecker; column++)
         {
-            for (int firstRow = 0; firstRow < 8; firstRow++)
+            for (int firstRow = 0; firstRow < rowChecker-1; firstRow++)
             {
-                for (int secondRow = firstRow + 1; secondRow < 9; secondRow++)
+                for (int secondRow = firstRow + 1; secondRow < rowChecker; secondRow++)
                 {
                     if (arrayNumbers[firstRow][column] == arrayNumbers[secondRow][column])
                     {
