@@ -17,6 +17,8 @@ private:
 public:
     void start() //should this be your constructor
     {
+        initializer();
+        gridDisplay();
         srand(time(NULL));
         cout << "    Let's begin your 9x9 grid!" << endl << endl << endl << endl;
         horizontalAssignment(0); 
@@ -26,12 +28,25 @@ public:
             cout << "Slot in loop: "<<countRow << endl;
             
             horizontalAssignment(countRow); //countRow is the line that will be compared with all the previous lines
-            
-            rowChecker = countRow;
-            
+        
+            rowChecker = countRow+1; 
+            cout << "rowChecker: " << rowChecker << endl;
+
+            verticalChecker();
             
         }    
-        gridDisplay(); //for some reason this one doesn't appear
+        gridDisplay(); 
+    }
+
+    void initializer()
+    {
+        for (int b = 0; b < 9; b++) //row
+        {
+            for (int a = 0; a < 9; a++) //column
+            {
+                arrayNumbers[b][a]= 0;
+            }
+        }
     }
 
     void horizontalAssignment(int row) //at start, should be equal to zero
@@ -65,18 +80,25 @@ public:
     void verticalChecker()
     {
      
-        for (int column = 0; column < rowChecker; column++)
+        for (int column = 0; column < 9; column++) 
         {
-            for (int firstRow = 0; firstRow < rowChecker; firstRow++)
+            for (int firstRow = 0; firstRow < rowChecker-1; firstRow++)
             {
                 for (int secondRow = firstRow + 1; secondRow < rowChecker; secondRow++)
                 {
-                    if (firstRow != secondRow && arrayNumbers[firstRow][column] == arrayNumbers[secondRow][column])
+                    gridDisplay();
+                    if ( arrayNumbers[firstRow][column] == arrayNumbers[secondRow][column])
                     {
+                        cout << "This was run" << endl;
                         horizontalAssignment(secondRow);
-                        //gridDisplay(); 
+                         
 
-                        
+                        cout << "column: " << column<<endl;
+                        cout << "firstRow: " << firstRow<<endl;
+                        cout << "secondRow: " << secondRow<<endl;
+                        gridDisplay();
+
+
                         column = 0;
                         firstRow = 0;
                         secondRow = 1;
