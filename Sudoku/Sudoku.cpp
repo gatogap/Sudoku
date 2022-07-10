@@ -19,22 +19,22 @@ public:
     {
         srand(time(NULL));
         cout << "    Let's begin your 9x9 grid!" << endl << endl << endl << endl;
-        horizontalAssignment(0,0); 
+        horizontalAssignment(0); 
         
         for (int countRow = 1; countRow < 9; countRow++)
         {
-            cout << countRow << endl;
+            cout << "Slot in loop: "<<countRow << endl;
             
-            horizontalAssignment(countRow,0); //countRow is the line that will be compared with all the previous lines
-            cout << "This was run" << endl;
+            horizontalAssignment(countRow); //countRow is the line that will be compared with all the previous lines
+            
             rowChecker = countRow;
-            verticalChecker();
+            
             
         }    
-        gridDisplay();
+        gridDisplay(); //for some reason this one doesn't appear
     }
 
-    void horizontalAssignment(int row, int column) //at start, should be equal to zero
+    void horizontalAssignment(int row) //at start, should be equal to zero
     {
         int index1 = 0; //horizontal
         int horizontal[9] = { 1,2,3,4,5,6,7,8,9 };
@@ -67,14 +67,14 @@ public:
      
         for (int column = 0; column < rowChecker; column++)
         {
-            for (int firstRow = 0; firstRow < rowChecker-1; firstRow++)
+            for (int firstRow = 0; firstRow < rowChecker; firstRow++)
             {
                 for (int secondRow = firstRow + 1; secondRow < rowChecker; secondRow++)
                 {
-                    if (arrayNumbers[firstRow][column] == arrayNumbers[secondRow][column])
+                    if (firstRow != secondRow && arrayNumbers[firstRow][column] == arrayNumbers[secondRow][column])
                     {
-                        horizontalAssignment(secondRow,column);
-                        gridDisplay();
+                        horizontalAssignment(secondRow);
+                        //gridDisplay(); 
 
                         
                         column = 0;
