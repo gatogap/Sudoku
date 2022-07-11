@@ -2,6 +2,7 @@
 //include keyboard
 #include <iostream>
 #include <string>
+#include <iomanip>
 #include <cstdlib> //randomizing library
 
 using namespace std;
@@ -9,36 +10,29 @@ using namespace std;
 class gamePreparation
 {
 private:
-    int index = 0;
     int arrayNumbers[9][9];
-    int arrayBlanks[30][30];
+    int arrayBlanks[9][9];
     int rowChecker = 0;
 
 public:
     void start() //should this be your constructor
     {
-        initializer();
-        //gridDisplay(); //DEBUGGER
+        //initializer();
         srand(time(NULL));
         cout << "    Let's begin your 9x9 grid!" << endl << endl << endl << endl;
         horizontalAssignment(0); 
         
         for (int countRow = 1; countRow < 9; countRow++)
-        {
-            //cout << "Slot in loop: "<<countRow << endl; //DEBUGGER
-            
+        {  
             horizontalAssignment(countRow); //countRow is the line that will be compared with all the previous lines
-        
             rowChecker = countRow+1; 
-            //cout << "rowChecker: " << rowChecker << endl; //DEBUGGER
-
-            verticalChecker();
-            
+            verticalChecker();         
         }    
         gridDisplay(); 
     }
 
-    void initializer()
+
+    void initializer() //very helpful for debugging. Maybe necessary to help initialize though. 
     {
         for (int b = 0; b < 9; b++) //row
         {
@@ -49,12 +43,12 @@ public:
         }
     }
 
-    void horizontalAssignment(int row) //at start, should be equal to zero
+    void horizontalAssignment(int row) //at start, row is zero
     {
-        int index1 = 0; //horizontal
+        int index1 = 0; //horizontal index
+        int a = 0; //column (x-axis)
         int horizontal[9] = { 1,2,3,4,5,6,7,8,9 };
-        int a = 0;
-      
+        
             /*------START OF ROW HERE-----*/
 
             while (a < 9) //column - x axis
@@ -86,19 +80,9 @@ public:
             {
                 for (int secondRow = firstRow + 1; secondRow < rowChecker; secondRow++)
                 {
-                    //gridDisplay(); //DEBUGGER
                     if ( arrayNumbers[firstRow][column] == arrayNumbers[secondRow][column])
                     {
-                        //cout << "This was run" << endl; //DEBUGGER
                         horizontalAssignment(secondRow);
-                         
-                        /*DEBUGGER
-                        cout << "column: " << column<<endl;
-                        cout << "firstRow: " << firstRow<<endl;
-                        cout << "secondRow: " << secondRow<<endl;
-                        gridDisplay(); 
-                        */
-
 
                         column = 0;
                         firstRow = 0;
@@ -128,7 +112,6 @@ public:
             cout << arrayNumbers[j][i];
             cout << endl;
 
-
             if (j < 8)
             {
                 cout << "-----------------------------------";
@@ -143,11 +126,10 @@ public:
 
 
 int main() {
-    cout << "           :) Herro! <3" << endl;
+    cout << setw(23) << ":) Herro! <3" << endl;
 
     gamePreparation round;
     round.start();
-
 
     system("pause");
     //include timer
