@@ -18,19 +18,19 @@ public:
     void start() //should this be your constructor
     {
         initializer();
-        gridDisplay();
+        //gridDisplay(); //DEBUGGER
         srand(time(NULL));
         cout << "    Let's begin your 9x9 grid!" << endl << endl << endl << endl;
         horizontalAssignment(0); 
         
         for (int countRow = 1; countRow < 9; countRow++)
         {
-            cout << "Slot in loop: "<<countRow << endl;
+            //cout << "Slot in loop: "<<countRow << endl; //DEBUGGER
             
             horizontalAssignment(countRow); //countRow is the line that will be compared with all the previous lines
         
             rowChecker = countRow+1; 
-            cout << "rowChecker: " << rowChecker << endl;
+            //cout << "rowChecker: " << rowChecker << endl; //DEBUGGER
 
             verticalChecker();
             
@@ -86,17 +86,18 @@ public:
             {
                 for (int secondRow = firstRow + 1; secondRow < rowChecker; secondRow++)
                 {
-                    gridDisplay();
+                    //gridDisplay(); //DEBUGGER
                     if ( arrayNumbers[firstRow][column] == arrayNumbers[secondRow][column])
                     {
-                        cout << "This was run" << endl;
+                        //cout << "This was run" << endl; //DEBUGGER
                         horizontalAssignment(secondRow);
                          
-
+                        /*DEBUGGER
                         cout << "column: " << column<<endl;
                         cout << "firstRow: " << firstRow<<endl;
                         cout << "secondRow: " << secondRow<<endl;
-                        gridDisplay();
+                        gridDisplay(); 
+                        */
 
 
                         column = 0;
