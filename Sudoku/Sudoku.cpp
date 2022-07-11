@@ -1,9 +1,18 @@
-﻿//Sudoku grid comes with a few spaces already filled in; the more spaces filled in, the easier the game – the more difficult Sudoku puzzles have very few spaces that are already filled in.
-//include keyboard
+﻿//include keyboard
 #include <iostream>
 #include <string>
+
+/*Sleep function library*/
 #include <iomanip>
-#include <cstdlib> //randomizing
+#include <time.h>
+#ifdef _WIN32
+#include <Windows.h>
+#else
+#include <unistd.h>
+#endif
+
+/*randomizing library*/
+#include <cstdlib>
 using namespace std;
 
 class gamePreparation
@@ -17,7 +26,7 @@ class gamePreparation
 
     public:
 
-        void start() //should this be your constructor
+        void setup()
         {
             numberInitializer();
             blankInitializer();
@@ -30,19 +39,16 @@ class gamePreparation
                 rowChecker = countRow+1; 
                 verticalChecker();         
             }    
-
             displayAssignment();
             levelOfDifficulty();
-
-            cout << endl << "    Let's begin your 9x9 grid!" << endl << endl << endl << endl;
-            gridDisplay(); 
+            system("CLS");
         }
 
         void levelOfDifficulty()
         {
             cout<<"[Choose the number of blank spots you would like to solve on your grid]"<<endl<<endl;
             int decision = 0; //user input
-            int difficulty = 0; //pass by value
+            int difficulty = 0; //pass by reference
 
             cout << " 1) 10 Blank Slots" << endl;
             cout << " 2) 20 Blank Slots" << endl;
@@ -76,7 +82,9 @@ class gamePreparation
                 break;
 
             default: 
-                cout << "[TRY AGAIN: Choose options 1-5]" << endl << endl;
+                cout << "~[TRY AGAIN: Choose options 1-5]~" << endl << endl;
+                Sleep(2050);
+                system("CLS");
                 levelOfDifficulty();
             }
         }
@@ -191,6 +199,12 @@ class gamePreparation
             }    
         }
 
+        void gameplay()
+        {
+            cout << endl << "    Let's begin your 9x9 grid!" << endl << endl << endl << endl;
+            gridDisplay();
+        }
+
         void gridDisplay()
         {
             int i = 0; //column (x-axis)
@@ -233,7 +247,9 @@ int main() {
     cout <<endl<< setw(40) << "\\(0_0)/  Hoi! " << endl;
 
     gamePreparation round;
-    round.start();
+    round.setup();
+    round.gameplay();
+    round.ending();
 
     system("pause");
     //include timer
