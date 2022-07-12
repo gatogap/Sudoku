@@ -2,6 +2,13 @@
 #include <iostream>
 #include <string>
 
+/*keyboard interaction*/
+#include <conio.h> 
+#define KEY_UP 72
+#define KEY_DOWN 80
+#define KEY_LEFT 75
+#define KEY_RIGHT 77
+
 /*Sleep function library*/
 #include <iomanip>
 #include <time.h>
@@ -203,7 +210,73 @@ class gamePreparation
         {
             cout << endl << "    Let's begin your 9x9 grid!" << endl << endl << endl << endl;
             gridDisplay();
+
+            int check = 0;
+
+            if (check < 1)
+            {
+                for (int b = 0; b < 9 && check<1; b++) //row
+                {
+                    for (int a = 0; a < 9 && check < 1; a++) //column
+                    {
+                        if (displayedArray[b][a] == " ")
+                        {
+                            system("CLS");
+                            cout << endl << "    Let's begin your 9x9 grid!" << endl << endl << endl << endl;
+                            displayedArray[b][a] = "X";
+                            gridDisplay();
+                            check++;
+                        }
+                    }
+                }
+            }
+                
+            char key = _getch();
+            int value = key;
+
+            switch (_getch())
+            {
+            case KEY_UP:
+                cout << endl << "    Let's begin your 9x9 grid!" << endl << endl << endl << endl;
+                cout << "Up works" << endl;
+                
+                break;
+
+            case KEY_DOWN:
+                cout << endl << "    Let's begin your 9x9 grid!" << endl << endl << endl << endl;
+                cout << "Down works" << endl;
+                break;
+
+            case KEY_LEFT:
+                cout << endl << "    Let's begin your 9x9 grid!" << endl << endl << endl << endl;
+                cout << "Left works" << endl;
+                break;
+
+            case KEY_RIGHT:
+                cout << endl << "    Let's begin your 9x9 grid!" << endl << endl << endl << endl;
+                    cout << "Right works" << endl;
+                break;
+
+            }
+            
+            //inputChecker();
+            
         }
+
+        void inputChecker()
+        {
+            for (int b = 0; b < 9; b++) //row
+            {
+                for (int a = 0; a < 9; a++) //column
+                {
+                    if (displayedArray[b][a] == arrayNumbers[b][a])
+                    {
+                        ending();
+                    }
+                }
+            }
+        }
+       
 
         void gridDisplay()
         {
@@ -249,7 +322,7 @@ int main() {
     gamePreparation round;
     round.setup();
     round.gameplay();
-    round.ending();
+    
 
     system("pause");
     //include timer
