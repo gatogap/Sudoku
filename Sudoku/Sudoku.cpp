@@ -210,12 +210,14 @@ class gamePreparation
         {
             cout << endl << "    Let's begin your 9x9 grid!" << endl << endl << endl << endl;
             gridDisplay();
+            int firstIndex = 0;
+            int secondIndex = 0;
 
             int check = 0;
 
             if (check < 1)
             {
-                for (int b = 0; b < 9 && check<1; b++) //row
+                for (int b = 0; b < 9 && check < 1; b++) //row
                 {
                     for (int a = 0; a < 9 && check < 1; a++) //column
                     {
@@ -226,57 +228,143 @@ class gamePreparation
                             displayedArray[b][a] = "X";
                             gridDisplay();
                             check++;
+                            firstIndex = a;
+                            secondIndex = b;
                         }
                     }
                 }
             }
-                
+
+            check = 0;
             char key = _getch();
             int value = key;
 
-            switch (_getch())
+            //while entire grid is not complete, run the switch statement
+            while (inputChecker() == false)
             {
-            case KEY_UP:
-                cout << endl << "    Let's begin your 9x9 grid!" << endl << endl << endl << endl;
-                cout << "Up works" << endl;
-                
-                break;
 
-            case KEY_DOWN:
-                cout << endl << "    Let's begin your 9x9 grid!" << endl << endl << endl << endl;
-                cout << "Down works" << endl;
-                break;
+                switch (_getch())
+                {
+                    case KEY_UP: //prioritize row
 
-            case KEY_LEFT:
-                cout << endl << "    Let's begin your 9x9 grid!" << endl << endl << endl << endl;
-                cout << "Left works" << endl;
-                break;
+                        if (check < 1)
+                        {
 
-            case KEY_RIGHT:
-                cout << endl << "    Let's begin your 9x9 grid!" << endl << endl << endl << endl;
-                    cout << "Right works" << endl;
-                break;
+                            for (int b = secondIndex; b >= 0 && check < 1; b--) //row
+                            {
 
+                                if (displayedArray[b][firstIndex] == " ")
+                                {
+                                    displayedArray[secondIndex][firstIndex] = " ";
+                                    system("CLS");
+                                    cout << endl << "    Let's begin your 9x9 grid!" << endl << endl << endl << endl;
+                                    displayedArray[b][firstIndex] = "X";
+                                    gridDisplay();
+                                    check++;
+                                    secondIndex = b;
+                                }
+
+                            }
+                        }
+
+                        check = 0;
+
+                        break;
+
+                    case KEY_DOWN: ////prioritize row
+
+                        if (check < 1)
+                        {
+                            for (int b = secondIndex; b < 9 && check < 1; b++) //row
+                            {
+                                if (displayedArray[b][firstIndex] == " ")
+                                {
+                                    displayedArray[secondIndex][firstIndex] = " ";
+                                    system("CLS");
+                                    cout << endl << "    Let's begin your 9x9 grid!" << endl << endl << endl << endl;
+                                    displayedArray[b][firstIndex] = "X";
+                                    gridDisplay();
+                                    check++;
+                                    secondIndex = b;
+                                }
+                            }
+                        }
+
+
+                        check = 0;
+
+                        break;
+
+                    case KEY_LEFT:
+
+                        if (check < 1)
+                        {
+                            for (int a = firstIndex; a >= 0 && check < 1; a--) //row
+                            {
+                                if (displayedArray[secondIndex][a] == " ")
+                                {
+                                    displayedArray[secondIndex][firstIndex] = " ";
+                                    system("CLS");
+                                    cout << endl << "    Let's begin your 9x9 grid!" << endl << endl << endl << endl;
+                                    displayedArray[secondIndex][a] = "X";
+                                    gridDisplay();
+                                    check++;
+                                    firstIndex = a;
+                                }
+                            }
+                        }
+
+
+                        check = 0;
+
+                        break;
+
+                    case KEY_RIGHT:
+
+                        if (check < 1)
+                        {
+                            for (int a = firstIndex; a < 9 && check < 1; a++) //row
+                            {
+                                if (displayedArray[secondIndex][a] == " ")
+                                {
+                                    displayedArray[secondIndex][firstIndex] = " ";
+                                    system("CLS");
+                                    cout << endl << "    Let's begin your 9x9 grid!" << endl << endl << endl << endl;
+                                    displayedArray[secondIndex][a] = "X";
+                                    gridDisplay();
+                                    check++;
+                                    firstIndex = a;
+                                }
+                            }
+                        }
+
+
+                        check = 0; 
+                        break;
+
+                }
             }
-            
-            //inputChecker();
-            
         }
 
-        void inputChecker()
+            
+
+        bool inputChecker()
         {
             for (int b = 0; b < 9; b++) //row
             {
                 for (int a = 0; a < 9; a++) //column
                 {
-                    if (displayedArray[b][a] == arrayNumbers[b][a])
+                    if (displayedArray[b][a] != arrayNumbers[b][a])
                     {
-                        ending();
+                        //b = 0;
+                        //a = 0;
+                        return false;
                     }
                 }
             }
+            
         }
-       
+
 
         void gridDisplay()
         {
