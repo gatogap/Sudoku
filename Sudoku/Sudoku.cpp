@@ -8,7 +8,8 @@
 #define KEY_DOWN 80
 #define KEY_LEFT 75
 #define KEY_RIGHT 77
-#define KEY_BACKSPACE 8
+#define KEY_ESCAPE 27
+#define KEY_ENTER 13
 
 /*Sleep function library*/
 #include <iomanip>
@@ -96,6 +97,7 @@ class gamePreparation
                 levelOfDifficulty();
             }
         }
+
         void displayAssignment()
         {
 
@@ -207,8 +209,6 @@ class gamePreparation
             }
         }
 
-        
-
         void gameplay()
         {
             
@@ -250,160 +250,198 @@ class gamePreparation
 
                 switch (_getch())
                 {
-                case KEY_UP: //prioritize row
-
-                    if (check < 1)
-                    {  
-                            for (int b = secondIndex; b >= 0 && check < 1; b--) //row
-                            {
+                    case KEY_UP: //prioritize row
+                        if (check < 1)
+                        {  
+                                for (int b = secondIndex; b >= 0 && check < 1; b--) //row
+                                {
                                
 
-                                    if (displayedArray[b][firstIndex] == " ")
-                                    {
-                                        displayedArray[secondIndex][firstIndex] = " ";
-                                        system("CLS");
-                                        cout << endl << "    Let's begin your 9x9 grid!" << endl << endl << endl << endl;
-                                        displayedArray[b][firstIndex] = "X";
-                                        gridDisplay();
-                                        check++;
-                                        secondIndex = b;
+                                        if (displayedArray[b][firstIndex] == " ")
+                                        {
+                                            displayedArray[secondIndex][firstIndex] = " ";
+                                            system("CLS");
+                                            cout << endl << "    Let's begin your 9x9 grid!" << endl << endl << endl << endl;
+                                            displayedArray[b][firstIndex] = "X";
+                                            gridDisplay();
+                                            check++;
+                                            secondIndex = b;
                                        
-                                    }
+                                        }
                                 
-                            }
-                    }
-
-                    check = 0;
-
-                    break;
-
-                case KEY_DOWN: ////prioritize row
-
-                        if (check < 1)
-                        {
-                            
-                                for (int b = secondIndex; b < 9 && check < 1; b++) //row
-                                {
-                                    if (displayedArray[b][firstIndex] == " ")
-                                    {
-                                        displayedArray[secondIndex][firstIndex] = " ";
-                                        system("CLS");
-                                        cout << endl << "    Let's begin your 9x9 grid!" << endl << endl << endl << endl;
-                                        displayedArray[b][firstIndex] = "X";
-                                        gridDisplay();
-                                        check++;
-                                        secondIndex = b;
-                                    }
                                 }
-                            
                         }
- 
-                        check = 0;
 
+                        check = 0;
                         break;
 
-                    case KEY_LEFT:
-
-                        if (check < 1)
-                        {
+                    case KEY_DOWN: ////prioritize row
+                            if (check < 1)
+                            {
                             
-                                for (int a = firstIndex; a >= 0 && check < 1; a--) //row
-                                {
-                                    if (displayedArray[secondIndex][a] == " ")
+                                    for (int b = secondIndex; b < 9 && check < 1; b++) //row
                                     {
-                                        displayedArray[secondIndex][firstIndex] = " ";
+                                        if (displayedArray[b][firstIndex] == " ")
+                                        {
+                                            displayedArray[secondIndex][firstIndex] = " ";
                                             system("CLS");
-                                            cout << endl << "    Let's begin your 9x9 grid!" << endl << endl << endl << endl;   
+                                            cout << endl << "    Let's begin your 9x9 grid!" << endl << endl << endl << endl;
+                                            displayedArray[b][firstIndex] = "X";
+                                            gridDisplay();
+                                            check++;
+                                            secondIndex = b;
+                                        }
+                                    }
+                            
+                            }
+ 
+                            check = 0;
+                            break;
+
+                        case KEY_LEFT:
+                            if (check < 1)
+                            {
+                            
+                                    for (int a = firstIndex; a >= 0 && check < 1; a--) //row
+                                    {
+                                        if (displayedArray[secondIndex][a] == " ")
+                                        {
+                                            displayedArray[secondIndex][firstIndex] = " ";
+                                                system("CLS");
+                                                cout << endl << "    Let's begin your 9x9 grid!" << endl << endl << endl << endl;   
+                                                displayedArray[secondIndex][a] = "X";
+                                                gridDisplay();
+                                                check++;
+                                            firstIndex = a;
+                                        }
+                                    }
+                            
+                            }
+
+                            check = 0;
+                            break;
+
+                        case KEY_RIGHT:
+                            if (check < 1)
+                            {
+                            
+                                    for (int a = firstIndex; a < 9 && check < 1; a++) //row
+                                    {
+                                        if (displayedArray[secondIndex][a] == " ")
+                                        {
+                                            displayedArray[secondIndex][firstIndex] = " ";
+                                            system("CLS");
+                                            cout << endl << "    Let's begin your 9x9 grid!" << endl << endl << endl << endl;
                                             displayedArray[secondIndex][a] = "X";
                                             gridDisplay();
                                             check++;
-                                        firstIndex = a;
+                                            firstIndex = a;
+                                        }
                                     }
-                                }
                             
-                        }
+                            }
 
-                        check = 0;
+                            check = 0; 
+                            break;
 
-                        break;
+                        
+                        case KEY_ESCAPE: //change into a different key
+                        
+                            if (check < 1)
+                            {
+                                int x = 0;
+                                int y = 0;
 
-                    case KEY_RIGHT:
+                                cout << "Enter the 9x9 coordinate you would like to work on:" << endl;
 
-                        if (check < 1)
-                        {
-                            
-                                for (int a = firstIndex; a < 9 && check < 1; a++) //row
+                                cout << "Type your x coordinate (domains [1,9]): ";
+                                cin >> x;
+
+                                cout << endl << "Type your y coordinate (ranges [1,9]): ";
+                                cin >> y;
+
+                                if (displayedArray[y - 1][x - 1] == arrayNumbers[y - 1][x - 1])
                                 {
-                                    if (displayedArray[secondIndex][a] == " ")
+                                    cout << "This coordinate doesn't need to be changed! Pick another one: ";
+                                    Sleep(2000);
+                                    system("CLS");
+                                    cout << endl << "    Let's begin your 9x9 grid!" << endl << endl << endl << endl;
+                                    gridDisplay();
+                                }
+
+                                else if (displayedArray[y - 1][x - 1] != arrayNumbers[y - 1][x - 1])
+                                {
+                                    system("CLS");
+                                    displayedArray[secondIndex][firstIndex] = " ";
+                                    cout << endl << "    Let's begin your 9x9 grid!" << endl << endl << endl << endl;
+                                    displayedArray[y - 1][x - 1] = "X";
+                                    gridDisplay();
+                                }
+                                else;
+                                
+                            }
+                                 check = 0;
+                                 break;
+
+                        case KEY_ENTER: //change into a different key
+                            if (check < 1)
+                            {
+                                string userGuess = "0";
+                                cout << "Enter your value for the coordinate marked with an 'X': ";
+                                cin >> userGuess;
+
+
+                                for (int b = 0; b < 9; b++) //row
+                                {
+                                    for (int a = 0; a < 9; a++) //column
                                     {
-                                        displayedArray[secondIndex][firstIndex] = " ";
-                                        system("CLS");
-                                        cout << endl << "    Let's begin your 9x9 grid!" << endl << endl << endl << endl;
-                                        displayedArray[secondIndex][a] = "X";
-                                        gridDisplay();
-                                        check++;
-                                        firstIndex = a;
+                                        if (displayedArray[b][a] == "X")
+                                        {
+                                         
+                                            if (userGuess == arrayNumbers[b][a])
+                                            {
+                                                displayedArray[b][a] = userGuess;
+                                            }
+
+
+                                            else if (userGuess != arrayNumbers[b][a])
+                                            {
+                                                cout << "Your guess is not correct! Try again" << endl;
+                                                Sleep(2000);
+                                            }  
+                                        }     
                                     }
                                 }
-                            
-                        }
 
-                        check = 0; 
-                        break;
-
-                        
-                    case KEY_BACKSPACE: 
-                        
-                        if (check < 1)
-                        {
-                            int x = 0;
-                            int y = 0;
-
-                            cout << "Enter the 9x9 coordinate you would like to work on:" << endl;
-
-                            cout << "Type your x coordinate (numbers [1,9]): ";
-                            cin >> x;
-
-                            cout << endl << "Type your y coordinate (numbers [1,9]): ";
-                            cin >> y;
-
-                            system("CLS");
-                            displayedArray[x - 1][y - 1] = "X";
-                        }
-                             check = 0;
-
-                             
-
-                        break;
-                }
+                                system("CLS");
+                                cout << endl << "    Let's begin your 9x9 grid!" << endl << endl << endl << endl;
+                                gridDisplay();
+                                check++;
+                            }
+                            check = 0;
+                            break;
+                    }
             }
         }
 
         bool inputChecker()
         {
-            string userGuess = "0";
-            cout << "Enter your value for the coordinate marked with an 'X': ";
-                cin >> userGuess;
-                int count = 0;
+            
 
             for (int b = 0; b < 9; b++) //row
             {
                 for (int a = 0; a < 9; a++) //column
                 {
-                    if (displayedArray[b][a] == "X")
-                    {
-                        displayedArray[b][a] = userGuess;
-
                         if (displayedArray[b][a] != arrayNumbers[b][a])
                         {
                             return false;
                         }
-                        
-                    }
+         
                 }
             }
 
             
+            cout << "This was run" << endl;
                 return true;
             
             
@@ -438,7 +476,25 @@ class gamePreparation
                     }
                     i++;
                 }
-                cout << displayedArray[j][i];
+
+                if (displayedArray[j][i] == "X")
+                {
+                    HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+                    SetConsoleTextAttribute(hConsole, 14);
+                    cout << displayedArray[j][i];
+                    SetConsoleTextAttribute(hConsole, 15);
+                    
+
+                }
+
+                else if (displayedArray[j][i] != "X")
+                {
+                    HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+                    SetConsoleTextAttribute(hConsole, 15);
+                    cout << displayedArray[j][i];
+                }
+
+               
                 cout << endl;
 
                 if (j < 8)
