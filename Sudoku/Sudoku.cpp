@@ -247,29 +247,25 @@ class gamePreparation
             //while entire grid is not complete, run the switch statement
             while (inputChecker() == false)
             {
-
                 switch (_getch())
                 {
                     case KEY_UP: //prioritize row
                         if (check < 1)
                         {  
-                                for (int b = secondIndex; b >= 0 && check < 1; b--) //row
+                            for (int b = secondIndex; b >= 0 && check < 1; b--) //row
+                            {
+                                if (displayedArray[b][firstIndex] == " ")
                                 {
-                               
-
-                                        if (displayedArray[b][firstIndex] == " ")
-                                        {
-                                            displayedArray[secondIndex][firstIndex] = " ";
-                                            system("CLS");
-                                            cout << endl << "    Let's begin your 9x9 grid!" << endl << endl << endl << endl;
-                                            displayedArray[b][firstIndex] = "X";
-                                            gridDisplay();
-                                            check++;
-                                            secondIndex = b;
+                                    displayedArray[secondIndex][firstIndex] = " ";
+                                    system("CLS");
+                                    cout << endl << "    Let's begin your 9x9 grid!" << endl << endl << endl << endl;
+                                    displayedArray[b][firstIndex] = "X";
+                                    gridDisplay();
+                                    check++;
+                                    secondIndex = b;
                                        
-                                        }
-                                
-                                }
+                                }    
+                            }
                         }
 
                         check = 0;
@@ -278,21 +274,19 @@ class gamePreparation
                     case KEY_DOWN: ////prioritize row
                             if (check < 1)
                             {
-                            
-                                    for (int b = secondIndex; b < 9 && check < 1; b++) //row
-                                    {
-                                        if (displayedArray[b][firstIndex] == " ")
-                                        {
-                                            displayedArray[secondIndex][firstIndex] = " ";
-                                            system("CLS");
-                                            cout << endl << "    Let's begin your 9x9 grid!" << endl << endl << endl << endl;
-                                            displayedArray[b][firstIndex] = "X";
-                                            gridDisplay();
-                                            check++;
-                                            secondIndex = b;
-                                        }
-                                    }
-                            
+                               for (int b = secondIndex; b < 9 && check < 1; b++) //row
+                               {
+                                  if (displayedArray[b][firstIndex] == " ")
+                                  {
+                                     displayedArray[secondIndex][firstIndex] = " ";
+                                     system("CLS");
+                                     cout << endl << "    Let's begin your 9x9 grid!" << endl << endl << endl << endl;
+                                     displayedArray[b][firstIndex] = "X";
+                                     gridDisplay();
+                                     check++;
+                                     secondIndex = b;
+                                  }
+                               }
                             }
  
                             check = 0;
@@ -300,22 +294,20 @@ class gamePreparation
 
                         case KEY_LEFT:
                             if (check < 1)
-                            {
-                            
-                                    for (int a = firstIndex; a >= 0 && check < 1; a--) //row
+                            {    
+                                for (int a = firstIndex; a >= 0 && check < 1; a--) //row
+                                {
+                                    if (displayedArray[secondIndex][a] == " ")
                                     {
-                                        if (displayedArray[secondIndex][a] == " ")
-                                        {
-                                            displayedArray[secondIndex][firstIndex] = " ";
-                                                system("CLS");
-                                                cout << endl << "    Let's begin your 9x9 grid!" << endl << endl << endl << endl;   
-                                                displayedArray[secondIndex][a] = "X";
-                                                gridDisplay();
-                                                check++;
-                                            firstIndex = a;
-                                        }
+                                        displayedArray[secondIndex][firstIndex] = " ";
+                                        system("CLS");
+                                        cout << endl << "    Let's begin your 9x9 grid!" << endl << endl << endl << endl;   
+                                        displayedArray[secondIndex][a] = "X";
+                                        gridDisplay();
+                                        check++;
+                                        firstIndex = a;
                                     }
-                            
+                                }
                             }
 
                             check = 0;
@@ -324,20 +316,19 @@ class gamePreparation
                         case KEY_RIGHT:
                             if (check < 1)
                             {
-                            
-                                    for (int a = firstIndex; a < 9 && check < 1; a++) //row
+                                for (int a = firstIndex; a < 9 && check < 1; a++) //row
+                                {
+                                    if (displayedArray[secondIndex][a] == " ")
                                     {
-                                        if (displayedArray[secondIndex][a] == " ")
-                                        {
-                                            displayedArray[secondIndex][firstIndex] = " ";
-                                            system("CLS");
-                                            cout << endl << "    Let's begin your 9x9 grid!" << endl << endl << endl << endl;
-                                            displayedArray[secondIndex][a] = "X";
-                                            gridDisplay();
-                                            check++;
-                                            firstIndex = a;
-                                        }
+                                        displayedArray[secondIndex][firstIndex] = " ";
+                                        system("CLS");
+                                        cout << endl << "    Let's begin your 9x9 grid!" << endl << endl << endl << endl;
+                                        displayedArray[secondIndex][a] = "X";
+                                        gridDisplay();
+                                        check++;
+                                        firstIndex = a;
                                     }
+                                }
                             
                             }
 
@@ -397,53 +388,70 @@ class gamePreparation
                                     {
                                         if (displayedArray[b][a] == "X")
                                         {
-                                         
                                             if (userGuess == arrayNumbers[b][a])
                                             {
                                                 displayedArray[b][a] = userGuess;
+                                                cout<<"Your guess is correct!" << endl;
+                                                Sleep(2000);
                                             }
-
 
                                             else if (userGuess != arrayNumbers[b][a])
                                             {
                                                 cout << "Your guess is not correct! Try again" << endl;
                                                 Sleep(2000);
-                                            }  
+                                            }
+
+                                            else;
                                         }     
                                     }
                                 }
 
                                 system("CLS");
                                 cout << endl << "    Let's begin your 9x9 grid!" << endl << endl << endl << endl;
-                                gridDisplay();
+
+                                if (check < 1)
+                                {
+                                    for (int b = 0; b < 9 && check < 1; b++) //row
+                                    {
+                                        for (int a = 0; a < 9 && check < 1; a++) //column
+                                        {
+                                            if (displayedArray[b][a] == " ")
+                                            {
+                                                system("CLS");
+                                                cout << endl << "    Let's begin your 9x9 grid!" << endl << endl << endl << endl;
+
+                                                displayedArray[b][a] = "X";
+                                                gridDisplay();
+                                                check++;
+                                                firstIndex = a;
+                                                secondIndex = b;
+                                            }
+                                        }
+                                    }
+                                }
                                 check++;
                             }
                             check = 0;
                             break;
-                    }
+                }
             }
         }
 
         bool inputChecker()
         {
-            
-
             for (int b = 0; b < 9; b++) //row
             {
                 for (int a = 0; a < 9; a++) //column
                 {
-                        if (displayedArray[b][a] != arrayNumbers[b][a])
-                        {
-                            return false;
-                        }
-         
+                    if (displayedArray[b][a] != arrayNumbers[b][a])
+                    {
+                        return false;
+                    }
                 }
             }
-
             
             cout << "This was run" << endl;
-                return true;
-            
+                return true;    
             
         }
 
@@ -465,7 +473,6 @@ class gamePreparation
                         cout << displayedArray[j][i];
                         SetConsoleTextAttribute(hConsole, 15);
                         cout << " | ";
-
                     }
 
                     else if (displayedArray[j][i] != "X")
@@ -483,8 +490,6 @@ class gamePreparation
                     SetConsoleTextAttribute(hConsole, 14);
                     cout << displayedArray[j][i];
                     SetConsoleTextAttribute(hConsole, 15);
-                    
-
                 }
 
                 else if (displayedArray[j][i] != "X")
@@ -494,7 +499,6 @@ class gamePreparation
                     cout << displayedArray[j][i];
                 }
 
-               
                 cout << endl;
 
                 if (j < 8)
@@ -522,11 +526,9 @@ int main() {
   
     cout <<endl<< setw(40) << "\\(0_0)/  Hoi! " << endl;
 
-
     gamePreparation round;
     round.setup();
     round.gameplay();
-    
 
     system("pause");
     //include timer
