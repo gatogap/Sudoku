@@ -1,10 +1,7 @@
-﻿//include keyboard
-#include <iostream>
+﻿#include <iostream>
 #include <string>
 #include <algorithm>
 #include <chrono>
-
-
 
 /*keyboard interaction*/
 #include <conio.h> 
@@ -40,8 +37,6 @@ private:
     
 
 public:
-
-    
 
     void setup()
     {
@@ -144,7 +139,6 @@ public:
             }
 
         }
-
     }
 
     void numberInitializer() //very helpful for debugging. Maybe necessary to help initialize though. 
@@ -180,7 +174,6 @@ public:
         while (a < 9) //column - x axis
         {
             index = rand() % 9;
-
 
             while (horizontal[index] == "0")
             {
@@ -225,7 +218,6 @@ public:
         gridDisplay();
         int firstIndex = 0;
         int secondIndex = 0;
-
         int check = 0;
 
         if (check < 1)
@@ -338,9 +330,7 @@ public:
                             firstIndex = a;
                         }
                     }
-
                 }
-
                 check = 0;
                 break;
 
@@ -378,7 +368,6 @@ public:
                         gridDisplay();
                     }
                     else;
-
                 }
                 check = 0;
                 break;
@@ -445,7 +434,6 @@ public:
                 break;
             }
         }
-        
         system("CLS");
     }
 
@@ -461,9 +449,7 @@ public:
                 }
             }
         }
-       
         return true;
-
     }
 
     void gridDisplay()
@@ -519,8 +505,7 @@ public:
             cout << endl;
             j++;
             i = 0;
-        }
-        
+        } 
     }
 
     void ending(int Duration)
@@ -529,25 +514,13 @@ public:
         cout << setw(45) << "YAYAYA! You finished it in " << Duration << string(2, '\n'); // set stopwatch to m:s
         cout << setw(60) << "~~~Last 10 highest scores for this difficulty setting~~~" << endl;
 
-        
-            cout <<endl<< setw(50)<<"[Thanks for playing! Until next time]" << string(2,'\n');
-        
-        
-    }
+        //insert txt.file here. Refer to elimination of older records & insertion of new records
 
+        cout <<endl<< setw(50)<<"[Thanks for playing! Until next time]" << string(2,'\n');  
+    }
 };
 
-
-        /*TIMER*/ //Source: https://www.geeksforgeeks.org/measure-execution-time-function-cpp/
-
-
-
-
-
-
 int main() {
-  
-   
     cout <<endl<< setw(40) << "\\(0_0)/  Hoi! " << endl;
 
     gamePreparation round;
@@ -558,9 +531,6 @@ int main() {
     auto duration = duration_cast<seconds>(stop - start);
     round.ending(duration.count());
    
-
     system("pause");
-    
-
     return 0;
 }
