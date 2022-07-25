@@ -275,6 +275,10 @@ public:
             case KEY_DOWN: ////prioritize row
                 if (check < 1)
                 {
+
+                    int a = firstIndex;
+                    int checker2 = 0;
+
                     for (int b = secondIndex; b < 9 && check < 1; b++) //row
                     {
                         if (displayedArray[b][firstIndex] == " ")
@@ -285,9 +289,39 @@ public:
                             displayedArray[b][firstIndex] = "X";
                             gridDisplay();
                             check++;
+
                             secondIndex = b;
                         }
+
+                    
+                        //make sure the up button could be pressed
+                        while (b == 8 && check < 1 && checker2 < 1)
+                        {
+                            a++;
+
+                            for (int B = 0; B < 9 && check < 1; B++) //row
+                            {
+                                if (displayedArray[B][a] == " ")
+                                {
+                                    displayedArray[secondIndex][firstIndex] = " ";
+                                    system("CLS");
+                                    cout << endl << "    Let's begin your 9x9 grid!" << string(4, '\n');
+                                    displayedArray[B][a] = "X";
+                                    gridDisplay();
+                                    secondIndex = B;
+                                    firstIndex = a;
+                                    checker2++;
+                                    check++;
+                                }
+
+
+                            }
+                        }
+                       
                     }
+                    
+                            
+                            
                 }
 
                 check = 0;
