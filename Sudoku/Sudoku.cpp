@@ -30,10 +30,14 @@ class gamePreparation
 {
 private:
     //making the arrays strings will display blank spaces on the 9x9 grid
-    string arrayNumbers[9][9];
-    string arrayBlanks[9][9];
-    string displayedArray[9][9];
+    string arrayNumbers[8][8];
+    string arrayBlanks[8][8]; //MAKE THIS DYNAMIC
+    string displayedArray[8][8]; //MAKE THIS DYNAMIC
+    
+
+    int spaceArraysOptions[3];
     int rowChecker = 0;
+    int size = 0;
     
 
 public:
@@ -52,61 +56,89 @@ public:
             verticalChecker();
         }
         displayAssignment();
-        levelOfDifficulty();
+        sizeDifficulty();
+        spaceDifficulty();
         system("CLS");
     }
 
-    void levelOfDifficulty()
+    void sizeDifficulty()
     {
-        cout << "[Choose the number of blank spots you would like to solve on your grid]" << endl << endl;
-        int decision = 0; //user input
-        int difficulty = 0; //pass by reference
-
-        cout << " 1) 10 Blank Slots" << endl;
-        cout << " 2) 20 Blank Slots" << endl;
-        cout << " 3) 30 Blank Slots" << endl;
-        cout << " 4) 40 Blank Slots" << endl;
-        cout << " 5) 50 Blank Slots" << string(2, '\n');
+        cout << "[Choose the size of your grid]" << endl << endl;
+        cout << " 1) 4x4" << endl;
+        cout << " 2) 6x6" << endl;
+        cout << " 3) 8x8" << string(2, '\n');
         cout << " Enter your decision here: ";
-        cin >> decision;
+        cin >> size;
         cout << endl;
 
-        switch (decision)
+        switch (size)
         {
         case 1:
-            blankAssignment(10);
+            spaceArraysOptions[0]= 4;
+            spaceArraysOptions[1] = 8;
+            spaceArraysOptions[2] = 12;
             break;
 
         case 2:
-            blankAssignment(20);
+            spaceArraysOptions[0] = 6;
+            spaceArraysOptions[1] = 18;
+            spaceArraysOptions[2] = 30;
             break;
 
         case 3:
-            blankAssignment(30);
+            spaceArraysOptions[0] = 8;
+            spaceArraysOptions[1] = 36;
+            spaceArraysOptions[2] = 49;
             break;
 
-        case 4:
-            blankAssignment(40);
+        default:
+            cout << "~[TRY AGAIN: Choose options 1-3]~" << string(2, '\n');
+            Sleep(2050);
+            system("CLS");
+            sizeDifficulty();
+        }  
+    }
+
+    void spaceDifficulty()
+    {
+        cout << "[Choose the number of blank spots you would like to solve on your grid]" << endl << endl;
+        int spaces = 0; //user input  
+
+        cout << " 1) " << spaceArraysOptions[0]<< " Blank Slots" << endl;
+        cout << " 2) " << spaceArraysOptions[1] << " Blank Slots" << endl;
+        cout << " 3) " << spaceArraysOptions[2] << " Blank Slots" << string(2, '\n');
+        cout << " Enter your decision here: ";
+        cin >> spaces;
+        cout << endl;
+
+        switch (spaces)
+        {
+        case 1:
+            blankAssignment(spaceArraysOptions[0]);
             break;
 
-        case 5:
-            blankAssignment(50);
+        case 2:
+            blankAssignment(spaceArraysOptions[1]);
+            break;
+
+        case 3:
+            blankAssignment(spaceArraysOptions[2]);
             break;
 
         default:
             cout << "~[TRY AGAIN: Choose options 1-5]~" << string(2, '\n');
             Sleep(2050);
             system("CLS");
-            levelOfDifficulty();
+            spaceDifficulty();
         }
     }
 
     void displayAssignment()
     {
 
-        for (int b = 0; b < 9; b++) //row
+        for (int b = 0; b < size; b++) //row
         {
-            for (int a = 0; a < 9; a++) //column
+            for (int a = 0; a < size; a++) //column
             {
                 displayedArray[b][a] = arrayNumbers[b][a];
             }
@@ -117,19 +149,19 @@ public:
     {
         int index1 = 0;
         int index2 = 0;
-        index1 = rand() % 9;
-        index2 = rand() % 9;
+        index1 = rand() % size;
+        index2 = rand() % size;
         int count = 0;
 
         while (count < difficulty)
         {
-            index1 = rand() % 9;
-            index2 = rand() % 9;
+            index1 = rand() % size;
+            index2 = rand() % size;
 
             while (displayedArray[index1][index2] == " ")
             {
-                index1 = rand() % 9;
-                index2 = rand() % 9;
+                index1 = rand() % size;
+                index2 = rand() % size;
             }
 
             if (displayedArray[index1][index2] != " ")
@@ -143,9 +175,9 @@ public:
 
     void numberInitializer() //very helpful for debugging. Maybe necessary to help initialize though. 
     {
-        for (int b = 0; b < 9; b++) //row
+        for (int b = 0; b < size; b++) //row
         {
-            for (int a = 0; a < 9; a++) //column
+            for (int a = 0; a < size; a++) //column
             {
                 arrayNumbers[b][a] = "0";
             }
@@ -154,26 +186,26 @@ public:
 
     void blankInitializer() //very helpful for debugging. Maybe necessary to help initialize though. 
     {
-        for (int b = 0; b < 9; b++) //row
+        for (int b = 0; b < size; b++) //row
         {
-            for (int a = 0; a < 9; a++) //column
+            for (int a = 0; a < size; a++) //column
             {
                 arrayBlanks[b][a] = " ";
             }
         }
     }
 
-    void horizontalAssignment(int row) //at start, row is zero
+    void horizontalAssignment(int row) //at start, row is zero MAKE HORIZONTAL ARRAY DYNAMIC
     {
         int index = 0; //horizontal index
         int a = 0; //column (x-axis)
-        string horizontal[9] = { "1","2","3","4","5","6","7","8","9" };
+        string horizontal[8] = { "1","2","3","4","5","6","7","8" };
 
         /*------START OF ROW HERE-----*/
 
-        while (a < 9) //column - x axis
+        while (a < 8) //column - x axis
         {
-            index = rand() % 9;
+            index = rand() % size;
 
             while (horizontal[index] == "0")
             {
@@ -209,6 +241,7 @@ public:
             }
         }
     }
+
 
     void gameplay()
     {
@@ -246,7 +279,7 @@ public:
         int value = key;
 
         //while entire grid is not complete, run the switch statement
-        while (inputChecker() == false)
+        while (inputChecker() == false) //fix the issue of changing the slots at the very edges at a = 8
         {
             switch (_getch())
             {
@@ -275,7 +308,7 @@ public:
                         {
                             a--;
 
-                            for (int B = 8; B >=0 && check < 1; B--) //row
+                            for (int B = 8; B >= 0 && check < 1; B--) //row
                             {
                                 if (displayedArray[B][a] == " ")
                                 {
@@ -317,7 +350,7 @@ public:
                             secondIndex = b;
                         }
 
-                    
+
                         //make sure the up button could be pressed
                         while (b == 8 && check < 1 && checker2 < 1)
                         {
@@ -339,8 +372,8 @@ public:
                                 }
                             }
                         }
-                       
-                    }                
+
+                    }
                 }
 
                 check = 0;
@@ -352,7 +385,7 @@ public:
                     int b = secondIndex;
                     int checker2 = 0;
 
-                    for (int a = firstIndex; a >= 0 && check < 1; a--) //row
+                    for (int a = firstIndex; a < 9 && check < 1; a--) //row
                     {
                         if (displayedArray[secondIndex][a] == " ")
                         {
@@ -365,7 +398,7 @@ public:
                             firstIndex = a;
                         }
 
-                        while (a == 8 && check < 1 && checker2 < 1)
+                        while (a == 0 && check < 1 && checker2 < 1)
                         {
                             b--;
 
@@ -386,8 +419,6 @@ public:
                             }
                         }
                     }
-
-                    
                 }
 
                 check = 0;
@@ -396,6 +427,9 @@ public:
             case KEY_RIGHT:
                 if (check < 1)
                 {
+                    int b = secondIndex;
+                    int checker2 = 0;
+
                     for (int a = firstIndex; a < 9 && check < 1; a++) //row
                     {
                         if (displayedArray[secondIndex][a] == " ")
@@ -408,11 +442,32 @@ public:
                             check++;
                             firstIndex = a;
                         }
+
+                        while (a == 8 && check <1 && checker2 < 1)
+                        {
+                            b++;
+
+                            for (int A = 0; A < 9 && check < 1; A++) //row
+                            {
+                                if (displayedArray[b][A] == " ")
+                                {
+                                    displayedArray[secondIndex][firstIndex] = " ";
+                                    system("CLS");
+                                    cout << endl << "    Let's begin your 9x9 grid!" << string(4, '\n');
+                                    displayedArray[b][A] = "X";
+                                    gridDisplay();
+                                    secondIndex = b;
+                                    firstIndex = A;
+                                    checker2++;
+                                    check++;
+                                }
+                            }
+                        }
                     }
                 }
                 check = 0;
                 break;
-
+            
 
             case KEY_ESCAPE: //change into a different key
 
@@ -514,7 +569,7 @@ public:
             }
         }
         system("CLS");
-    }
+    } 
 
     bool inputChecker()
     {
@@ -587,11 +642,16 @@ public:
         } 
     }
 
-    void ending(int Duration)
+    void ending(int seconds)
     {
+        int minutes = seconds / 60;
+        int hours = minutes / 60;
+
+
         cout << setw(40) << "( ^o^)/\\(^_^ )" << string(2, '\n');
-        cout << setw(45) << "YAYAYA! You finished it in " << Duration << string(2, '\n'); // set stopwatch to m:s
-        cout << setw(60) << "~~~Last 10 highest scores for this difficulty setting~~~" << endl;
+        cout << setw(45) << "YAYAYA! You finished it in " << hours<<":"<<minutes%60<<":"<<seconds%60<< string(2, '\n'); // set stopwatch to m:s
+        cout << setw(60) << "~~~Last 5 highest scores for this difficulty setting~~~" << endl;
+
 
         //insert txt.file here. Refer to elimination of older records & insertion of new records
 
