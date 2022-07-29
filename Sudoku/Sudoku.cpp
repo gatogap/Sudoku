@@ -29,11 +29,10 @@ using namespace std::chrono;
 class gamePreparation
 {
 private:
-    //making the arrays strings will display blank spaces on the 9x9 grid
+    //making the arrays strings will display blank spaces on the grid
     string arrayNumbers[8][8];
     string arrayBlanks[8][8]; //MAKE THIS DYNAMIC
     string displayedArray[8][8]; //MAKE THIS DYNAMIC
-    
 
     int spaceArraysOptions[3];
     int rowChecker = 0;
@@ -44,48 +43,55 @@ public:
 
     void setup()
     {
+        /*SOMETHING ABOUT THE ORDER PREVENTS IT FROM RUNNING PROPERLY*/
         numberInitializer();
         blankInitializer();
+        sizeDifficulty();
         srand(time(NULL));
         horizontalAssignment(0);
 
-        for (int countRow = 1; countRow < 9; countRow++)
+        for (int countRow = 1; countRow < size; countRow++)
         {
             horizontalAssignment(countRow); //countRow is the line that will be compared with all the previous lines
             rowChecker = countRow + 1;
             verticalChecker();
         }
+        
         displayAssignment();
-        sizeDifficulty();
         spaceDifficulty();
         system("CLS");
     }
 
     void sizeDifficulty()
     {
+        int decision = 0;
+
         cout << "[Choose the size of your grid]" << endl << endl;
         cout << " 1) 4x4" << endl;
         cout << " 2) 6x6" << endl;
         cout << " 3) 8x8" << string(2, '\n');
         cout << " Enter your decision here: ";
-        cin >> size;
+        cin >> decision;
         cout << endl;
 
-        switch (size)
+        switch (decision)
         {
         case 1:
+            size = 4;
             spaceArraysOptions[0]= 4;
             spaceArraysOptions[1] = 8;
             spaceArraysOptions[2] = 12;
             break;
 
         case 2:
+            size = 6;
             spaceArraysOptions[0] = 6;
             spaceArraysOptions[1] = 18;
             spaceArraysOptions[2] = 30;
             break;
 
         case 3:
+            size = 8;
             spaceArraysOptions[0] = 8;
             spaceArraysOptions[1] = 36;
             spaceArraysOptions[2] = 49;
@@ -197,25 +203,32 @@ public:
 
     void horizontalAssignment(int row) //at start, row is zero MAKE HORIZONTAL ARRAY DYNAMIC
     {
-        int index = 0; //horizontal index
-        int a = 0; //column (x-axis)
-        string horizontal[8] = { "1","2","3","4","5","6","7","8" };
+        string horizontal[8] = {"1","2","3","4","5","6","7","8"};
+        string* ptrHorizontal = new string[size]; //dynamic array
+
+        for (int dynamicIndex = 0; dynamicIndex < size; dynamicIndex++)
+        {
+            ptrHorizontal[dynamicIndex] = horizontal[dynamicIndex];
+            //cout << ptrHorizontal[dynamicIndex];
+        }
 
         /*------START OF ROW HERE-----*/
+        int index = 0; //horizontal index
+        int a = 0; //column (x-axis
 
-        while (a < 8) //column - x axis
+        while (a < size) //column - x axis
         {
             index = rand() % size;
 
-            while (horizontal[index] == "0")
+            while (ptrHorizontal[index] == "0")
             {
-                index = rand() % 9;
+                index = rand() % size;
             }
 
-            if (horizontal[index] != "0")
+            if (ptrHorizontal[index] != "0")
             {
-                arrayNumbers[row][a] = horizontal[index];
-                horizontal[index] = "0";
+                arrayNumbers[row][a] = ptrHorizontal[index];
+                ptrHorizontal[index] = "0";
 
                 a++;
             }
@@ -224,7 +237,7 @@ public:
 
     void verticalChecker()
     {
-        for (int column = 0; column < 9; column++)
+        for (int column = 0; column < size; column++)
         {
             for (int firstRow = 0; firstRow < rowChecker - 1; firstRow++)
             {
@@ -246,7 +259,7 @@ public:
     void gameplay()
     {
 
-        cout << endl << "    Let's begin your 9x9 grid!" << string(4, '\n');
+        cout << endl << "    Let's begin your " << size<< "x" <<size<< "grid!" << string(4, '\n');
         
         gridDisplay();
         int firstIndex = 0;
@@ -255,15 +268,14 @@ public:
 
         if (check < 1)
         {
-            for (int b = 0; b < 9 && check < 1; b++) //row
+            for (int b = 0; b < size && check < 1; b++) //row
             {
-                for (int a = 0; a < 9 && check < 1; a++) //column
+                for (int a = 0; a < size && check < 1; a++) //column
                 {
                     if (displayedArray[b][a] == " ")
                     {
                         system("CLS");
-                        cout << endl << "    Let's begin your 9x9 grid!" << string(4, '\n');
-
+                        cout << endl << "    Let's begin your " << size << "x" << size << "grid!" << string(4, '\n');
                         displayedArray[b][a] = "X";
                         gridDisplay();
                         check++;
@@ -295,7 +307,7 @@ public:
                         {
                             displayedArray[secondIndex][firstIndex] = " ";
                             system("CLS");
-                            cout << endl << "    Let's begin your 9x9 grid!" << string(4, '\n');
+                            cout << endl << "    Let's begin your " << size << "x" << size << "grid!" << string(4, '\n');
                             displayedArray[b][firstIndex] = "X";
                             gridDisplay();
                             check++;
@@ -308,13 +320,13 @@ public:
                         {
                             a--;
 
-                            for (int B = 8; B >= 0 && check < 1; B--) //row
+                            for (int B = size-1; B >= 0 && check < 1; B--) //row
                             {
                                 if (displayedArray[B][a] == " ")
                                 {
                                     displayedArray[secondIndex][firstIndex] = " ";
                                     system("CLS");
-                                    cout << endl << "    Let's begin your 9x9 grid!" << string(4, '\n');
+                                    cout << endl << "    Let's begin your " << size << "x" << size << "grid!" << string(4, '\n');
                                     displayedArray[B][a] = "X";
                                     gridDisplay();
                                     secondIndex = B;
@@ -337,7 +349,7 @@ public:
                     int a = firstIndex;
                     int checker2 = 0;
 
-                    for (int b = secondIndex; b < 9 && check < 1; b++) //row
+                    for (int b = secondIndex; b < size && check < 1; b++) //row
                     {
                         if (displayedArray[b][firstIndex] == " ")
                         {
@@ -352,11 +364,11 @@ public:
 
 
                         //make sure the up button could be pressed
-                        while (b == 8 && check < 1 && checker2 < 1)
+                        while (b == size-1 && check < 1 && checker2 < 1)
                         {
                             a++;
 
-                            for (int B = 0; B < 9 && check < 1; B++) //row
+                            for (int B = 0; B < size && check < 1; B++) //row
                             {
                                 if (displayedArray[B][a] == " ")
                                 {
@@ -385,7 +397,7 @@ public:
                     int b = secondIndex;
                     int checker2 = 0;
 
-                    for (int a = firstIndex; a < 9 && check < 1; a--) //row
+                    for (int a = firstIndex; a <size && check < 1; a--) //row (a used to be a<size)
                     {
                         if (displayedArray[secondIndex][a] == " ")
                         {
@@ -402,7 +414,7 @@ public:
                         {
                             b--;
 
-                            for (int A = 8; A >= 0 && check < 1; A--) //row
+                            for (int A = size-1; A >= 0 && check < 1; A--) //row
                             {
                                 if (displayedArray[b][A] == " ")
                                 {
@@ -430,7 +442,7 @@ public:
                     int b = secondIndex;
                     int checker2 = 0;
 
-                    for (int a = firstIndex; a < 9 && check < 1; a++) //row
+                    for (int a = firstIndex; a < size && check < 1; a++) //row
                     {
                         if (displayedArray[secondIndex][a] == " ")
                         {
@@ -443,11 +455,11 @@ public:
                             firstIndex = a;
                         }
 
-                        while (a == 8 && check <1 && checker2 < 1)
+                        while (a == size-1 && check <1 && checker2 < 1)
                         {
                             b++;
 
-                            for (int A = 0; A < 9 && check < 1; A++) //row
+                            for (int A = 0; A < size && check < 1; A++) //row
                             {
                                 if (displayedArray[b][A] == " ")
                                 {
@@ -514,9 +526,9 @@ public:
                     cin >> userGuess;
 
 
-                    for (int b = 0; b < 9; b++) //row
+                    for (int b = 0; b < size; b++) //row
                     {
-                        for (int a = 0; a < 9; a++) //column
+                        for (int a = 0; a < size; a++) //column
                         {
                             if (displayedArray[b][a] == "X")
                             {
@@ -545,9 +557,9 @@ public:
 
                     if (check < 1)
                     {
-                        for (int b = 0; b < 9 && check < 1; b++) //row
+                        for (int b = 0; b < size && check < 1; b++) //row
                         {
-                            for (int a = 0; a < 9 && check < 1; a++) //column
+                            for (int a = 0; a < size && check < 1; a++) //column
                             {
                                 if (displayedArray[b][a] == " ")
                                 {
@@ -573,9 +585,9 @@ public:
 
     bool inputChecker()
     {
-        for (int b = 0; b < 9; b++) //row
+        for (int b = 0; b < size; b++) //row
         {
-            for (int a = 0; a < 9; a++) //column
+            for (int a = 0; a < size; a++) //column
             {
                 if (displayedArray[b][a] != arrayNumbers[b][a])
                 {
@@ -592,10 +604,10 @@ public:
         int j = 0; //row (y-axis)
 
 
-        while (j < 9) //row (y-axis)
+        while (j < size) //row (y-axis)
         {
             cout << " ";
-            while (i < 8) //column (x-axis)
+            while (i < size-1) //column (x-axis)
             {
                 if (displayedArray[j][i] == "X")
                 {
@@ -632,7 +644,7 @@ public:
 
             cout << endl;
 
-            if (j < 8)
+            if (j < size-1)
             {
                 cout << "-----------------------------------";
             }
@@ -660,7 +672,22 @@ public:
 };
 
 int main() {
-    cout <<endl<< setw(40) << "\\(0_0)/  Hoi! " << endl;
+    /*
+    int size = 0;
+    cin >> size;
+    string* ptrHorizontal = new string[size]; //dynamic array
+    string horizontal[8] = { "1","2","3","4","5","6","7","8" };
+
+    for (int dynamicIndex = 0; dynamicIndex < size; dynamicIndex++)
+    {
+        cout << "this ran" << endl;
+        ptrHorizontal[dynamicIndex] = horizontal[dynamicIndex];
+        cout << ptrHorizontal[dynamicIndex] << endl;
+    }
+    */
+
+
+    cout <<endl<< setw(40) << "\\(0_0)/  Hoi! " << endl<<endl;
 
     gamePreparation round;
     round.setup();
@@ -669,6 +696,7 @@ int main() {
     auto stop = high_resolution_clock::now();
     auto duration = duration_cast<seconds>(stop - start);
     round.ending(duration.count());
+    
    
     system("pause");
     return 0;
