@@ -255,11 +255,28 @@ public:
         }
     }
 
+    int Left()
+    {
+        int firstIndex = 0;
+        int secondIndex = 0;
+
+        for (int b = 0; b < size; b++) //row
+        {
+            for (int a = 0; a < size; a++) //column
+            {
+                if (displayedArray[b][a] == " ")
+                {
+                    return b, a;
+                }
+            }
+        }
+    }
+
 
     void gameplay()
     {
 
-        cout << endl << "    Let's begin your " << size<< "x" <<size<< "grid!" << string(4, '\n');
+        cout << endl << "    Let's begin your " << size<< "x" <<size<< " grid!" << string(4, '\n');
         
         gridDisplay();
         int firstIndex = 0;
@@ -275,7 +292,7 @@ public:
                     if (displayedArray[b][a] == " ")
                     {
                         system("CLS");
-                        cout << endl << "    Let's begin your " << size << "x" << size << "grid!" << string(4, '\n');
+                        cout << endl << "    Let's begin your " << size << "x" << size << " grid!" << string(4, '\n');
                         displayedArray[b][a] = "X";
                         gridDisplay();
                         check++;
@@ -303,11 +320,12 @@ public:
 
                     for (int b = secondIndex; b >= 0 && check < 1; b--) //row
                     {
+
                         if (displayedArray[b][firstIndex] == " ")
                         {
                             displayedArray[secondIndex][firstIndex] = " ";
                             system("CLS");
-                            cout << endl << "    Let's begin your " << size << "x" << size << "grid!" << string(4, '\n');
+                            cout << endl << "    Let's begin your " << size << "x" << size << " grid!" << string(4, '\n');
                             displayedArray[b][firstIndex] = "X";
                             gridDisplay();
                             check++;
@@ -326,7 +344,7 @@ public:
                                 {
                                     displayedArray[secondIndex][firstIndex] = " ";
                                     system("CLS");
-                                    cout << endl << "    Let's begin your " << size << "x" << size << "grid!" << string(4, '\n');
+                                    cout << endl << "    Let's begin your " << size << "x" << size << " grid!" << string(4, '\n');
                                     displayedArray[B][a] = "X";
                                     gridDisplay();
                                     secondIndex = B;
@@ -355,7 +373,7 @@ public:
                         {
                             displayedArray[secondIndex][firstIndex] = " ";
                             system("CLS");
-                            cout << endl << "    Let's begin your 9x9 grid!" << string(4, '\n');
+                            cout << endl << "    Let's begin your " << size << "x" << size << " grid!" << string(4, '\n');
                             displayedArray[b][firstIndex] = "X";
                             gridDisplay();
                             check++;
@@ -374,7 +392,7 @@ public:
                                 {
                                     displayedArray[secondIndex][firstIndex] = " ";
                                     system("CLS");
-                                    cout << endl << "    Let's begin your 9x9 grid!" << string(4, '\n');
+                                    cout << endl << "    Let's begin your " << size << "x" << size << " grid!" << string(4, '\n');
                                     displayedArray[B][a] = "X";
                                     gridDisplay();
                                     secondIndex = B;
@@ -399,11 +417,29 @@ public:
 
                     for (int a = firstIndex; a <size && check < 1; a--) //row (a used to be a<size)
                     {
-                        if (displayedArray[secondIndex][a] == " ")
+
+                        if (Left() == b && Left() == a)
                         {
                             displayedArray[secondIndex][firstIndex] = " ";
                             system("CLS");
-                            cout << endl << "    Let's begin your 9x9 grid!" << string(4, '\n');
+                            cout << endl << "    Let's begin your " << size << "x" << size << " grid!" << string(4, '\n');
+                            displayedArray[b][a] = "X";
+                            gridDisplay();
+
+                            firstIndex = a;
+                            secondIndex = b;
+
+                            check++;
+                            cout << "This is a: " << a << endl;
+                            cout << "This is B: " << b << endl;
+                           
+                        }
+
+                        else if (displayedArray[secondIndex][a] == " ")
+                        {
+                            displayedArray[secondIndex][firstIndex] = " ";
+                            system("CLS");
+                            cout << endl << "    Let's begin your " << size << "x" << size << " grid!" << string(4, '\n');
                             displayedArray[secondIndex][a] = "X";
                             gridDisplay();
                             check++;
@@ -414,13 +450,13 @@ public:
                         {
                             b--;
 
-                            for (int A = size-1; A >= 0 && check < 1; A--) //row
+                            for (int A = size - 1; A >= 0 && check < 1; A--) //row
                             {
                                 if (displayedArray[b][A] == " ")
                                 {
                                     displayedArray[secondIndex][firstIndex] = " ";
                                     system("CLS");
-                                    cout << endl << "    Let's begin your 9x9 grid!" << string(4, '\n');
+                                    cout << endl << "    Let's begin your " << size << "x" << size << " grid!" << string(4, '\n');
                                     displayedArray[b][A] = "X";
                                     gridDisplay();
                                     secondIndex = b;
@@ -430,6 +466,8 @@ public:
                                 }
                             }
                         }
+
+                        
                     }
                 }
 
@@ -448,7 +486,7 @@ public:
                         {
                             displayedArray[secondIndex][firstIndex] = " ";
                             system("CLS");
-                            cout << endl << "    Let's begin your 9x9 grid!" << string(4, '\n');
+                            cout << endl << "    Let's begin your " << size << "x" << size << " grid!" << string(4, '\n');
                             displayedArray[secondIndex][a] = "X";
                             gridDisplay();
                             check++;
@@ -465,7 +503,7 @@ public:
                                 {
                                     displayedArray[secondIndex][firstIndex] = " ";
                                     system("CLS");
-                                    cout << endl << "    Let's begin your 9x9 grid!" << string(4, '\n');
+                                    cout << endl << "    Let's begin your " << size << "x" << size << " grid!" << string(4, '\n');
                                     displayedArray[b][A] = "X";
                                     gridDisplay();
                                     secondIndex = b;
@@ -488,9 +526,9 @@ public:
                     int x = 0;
                     int y = 0;
 
-                    cout << "Enter the 9x9 coordinate you would like to work on:" << endl;
+                    cout << "Enter the "<<size <<"x"<<size<< "coordinate you would like to work on : " << endl;
 
-                    cout << "Type your x coordinate (domains [1,9]): ";
+                    cout << "Type your x coordinate (domains [1," << size << "]): ";
                     cin >> x;
 
                     cout << endl << "Type your y coordinate (ranges [1,9]): ";
@@ -501,7 +539,7 @@ public:
                         cout << "This coordinate doesn't need to be changed! Pick another one: ";
                         Sleep(2000);
                         system("CLS");
-                        cout << endl << "    Let's begin your 9x9 grid!" << string(4, '\n');
+                        cout << endl << "    Let's begin your " << size << "x" << size <<" grid!" << string(4, '\n');
                         gridDisplay();
                     }
 
@@ -509,7 +547,7 @@ public:
                     {
                         system("CLS");
                         displayedArray[secondIndex][firstIndex] = " ";
-                        cout << endl << "    Let's begin your 9x9 grid!" << string(4, '\n');
+                        cout << endl << "    Let's begin your " << size << "x" << size << " grid!" << string(4, '\n');
                         displayedArray[y - 1][x - 1] = "X";
                         gridDisplay();
                     }
@@ -553,7 +591,7 @@ public:
                     }
 
                     system("CLS");
-                    cout << endl << "    Let's begin your 9x9 grid!" << string(4, '\n');
+                    cout << endl << "    Let's begin your " << size << "x" << size << " grid!" << string(4, '\n');
 
                     if (check < 1)
                     {
@@ -564,7 +602,7 @@ public:
                                 if (displayedArray[b][a] == " ")
                                 {
                                     system("CLS");
-                                    cout << endl << "    Let's begin your 9x9 grid!" << string(4, '\n');
+                                    cout << endl << "    Let's begin your " << size << "x" << size << " grid!" << string(4, '\n');
                                     displayedArray[b][a] = "X";
                                     gridDisplay();
                                     check++;
@@ -659,7 +697,6 @@ public:
         int minutes = seconds / 60;
         int hours = minutes / 60;
 
-
         cout << setw(40) << "( ^o^)/\\(^_^ )" << string(2, '\n');
         cout << setw(45) << "YAYAYA! You finished it in " << hours<<":"<<minutes%60<<":"<<seconds%60<< string(2, '\n'); // set stopwatch to m:s
         cout << setw(60) << "~~~Last 5 highest scores for this difficulty setting~~~" << endl;
@@ -671,22 +708,8 @@ public:
     }
 };
 
-int main() {
-    /*
-    int size = 0;
-    cin >> size;
-    string* ptrHorizontal = new string[size]; //dynamic array
-    string horizontal[8] = { "1","2","3","4","5","6","7","8" };
-
-    for (int dynamicIndex = 0; dynamicIndex < size; dynamicIndex++)
-    {
-        cout << "this ran" << endl;
-        ptrHorizontal[dynamicIndex] = horizontal[dynamicIndex];
-        cout << ptrHorizontal[dynamicIndex] << endl;
-    }
-    */
-
-
+int main() 
+{
     cout <<endl<< setw(40) << "\\(0_0)/  Hoi! " << endl<<endl;
 
     gamePreparation round;
