@@ -132,7 +132,7 @@ public:
             break;
 
         default:
-            cout << "~[TRY AGAIN: Choose options 1-5]~" << string(2, '\n');
+            cout << "~[TRY AGAIN: Choose options 1-3]~" << string(2, '\n');
             Sleep(2050);
             system("CLS");
             spaceDifficulty();
@@ -257,8 +257,7 @@ public:
 
     int Left()
     {
-        int firstIndex = 0;
-        int secondIndex = 0;
+        int secondBlank = 0;
 
         for (int b = 0; b < size; b++) //row
         {
@@ -266,7 +265,14 @@ public:
             {
                 if (displayedArray[b][a] == " ")
                 {
-                    return b, a;
+                    secondBlank++;
+
+                    if (secondBlank == 2)
+                    {
+                        cout << "b: " << b << endl;
+                        cout << "a: " << a << endl;
+                        return a,b;
+                    }
                 }
             }
         }
@@ -310,6 +316,7 @@ public:
         //while entire grid is not complete, run the switch statement
         while (inputChecker() == false) //fix the issue of changing the slots at the very edges at a = 8
         {
+            int checker3 = 0;
             switch (_getch())
             {
             case KEY_UP: //prioritize row
@@ -410,7 +417,7 @@ public:
                 break;
 
             case KEY_LEFT:
-                if (check < 1)
+                if (check < 1 && checker3<1)
                 {
                     int b = secondIndex;
                     int checker2 = 0;
@@ -418,8 +425,9 @@ public:
                     for (int a = firstIndex; a <size && check < 1; a--) //row (a used to be a<size)
                     {
 
-                        if (Left() == b && Left() == a)
+                        if (Left() == a && Left() == b)
                         {
+                            checker3++;
                             displayedArray[secondIndex][firstIndex] = " ";
                             system("CLS");
                             cout << endl << "    Let's begin your " << size << "x" << size << " grid!" << string(4, '\n');
@@ -435,7 +443,7 @@ public:
                            
                         }
 
-                        else if (displayedArray[secondIndex][a] == " ")
+                        if (displayedArray[secondIndex][a] == " ")
                         {
                             displayedArray[secondIndex][firstIndex] = " ";
                             system("CLS");
