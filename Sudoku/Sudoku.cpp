@@ -255,7 +255,7 @@ public:
         }
     }
 
-    int Left()
+    int LeftA()
     {
         int secondBlank = 0;
 
@@ -265,18 +265,36 @@ public:
             {
                 if (displayedArray[b][a] == " ")
                 {
-                    secondBlank++;
-
-                    if (secondBlank == 2)
-                    {
-                        cout << "b: " << b << endl;
+                    
                         cout << "a: " << a << endl;
-                        return a,b;
-                    }
+                        return a;
+                    
                 }
             }
         }
     }
+
+    int LeftB()
+    {
+        int secondBlank = 0;
+
+        for (int b = 0; b < size; b++) //row
+        {
+            for (int a = 0; a < size; a++) //column
+            {
+                if (displayedArray[b][a] == " ")
+                {
+                   
+
+                        cout << "b: " << b << endl;
+                        return b;
+                    
+                }
+            }
+        }
+    }
+
+   
 
 
     void gameplay()
@@ -287,6 +305,10 @@ public:
         gridDisplay();
         int firstIndex = 0;
         int secondIndex = 0;
+        int initialA = 0;
+        int initialB = 0;
+        int lastLeftA = LeftA();
+        int lastLeftB = LeftB();
         int check = 0;
 
         if (check < 1)
@@ -304,6 +326,8 @@ public:
                         check++;
                         firstIndex = a;
                         secondIndex = b;
+                        initialA = a;
+                        initialB = b;
                     }
                 }
             }
@@ -421,19 +445,14 @@ public:
                 {
                     int b = secondIndex;
                     int checker2 = 0;
+                    
 
                     for (int a = firstIndex; a <size && check < 1; a--) //row (a used to be a<size)
-                    {
+                    { 
 
-                        if (Left() == a && Left() == b)
+                        if (displayedArray[lastLeftB][lastLeftA] == "X" || displayedArray[initialA][initialB] == "X")
                         {
                             checker3++;
-                            displayedArray[secondIndex][firstIndex] = " ";
-                            system("CLS");
-                            cout << endl << "    Let's begin your " << size << "x" << size << " grid!" << string(4, '\n');
-                            displayedArray[b][a] = "X";
-                            gridDisplay();
-
                             firstIndex = a;
                             secondIndex = b;
 
@@ -457,6 +476,25 @@ public:
                         while (a == 0 && check < 1 && checker2 < 1)
                         {
                             b--;
+
+                            if (LeftA() == a && LeftB() == b)
+                            {
+                                checker3++;
+                                displayedArray[secondIndex][firstIndex] = " ";
+                                system("CLS");
+                                cout << endl << "    Let's begin your " << size << "x" << size << " grid!" << string(4, '\n');
+                                displayedArray[b][a] = "X";
+                                gridDisplay();
+
+                                firstIndex = a;
+                                secondIndex = b;
+
+                                check++;
+                                cout << "This is a: " << a << endl;
+                                cout << "This is B: " << b << endl;
+
+                            }
+
 
                             for (int A = size - 1; A >= 0 && check < 1; A--) //row
                             {
@@ -714,6 +752,13 @@ public:
 
         cout <<endl<< setw(50)<<"[Thanks for playing! Until next time]" << string(2,'\n');  
     }
+
+    int returnTester()
+    {
+        int k = 3;
+        int m = 4;
+            return k, m;
+    }
 };
 
 int main() 
@@ -721,12 +766,16 @@ int main()
     cout <<endl<< setw(40) << "\\(0_0)/  Hoi! " << endl<<endl;
 
     gamePreparation round;
+    //cout << round.returnTester() << endl;
+
+    
     round.setup();
     auto start = high_resolution_clock::now();
     round.gameplay();
     auto stop = high_resolution_clock::now();
     auto duration = duration_cast<seconds>(stop - start);
     round.ending(duration.count());
+    
     
    
     system("pause");
