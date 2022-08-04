@@ -257,18 +257,14 @@ public:
 
     int LeftA()
     {
-        int secondBlank = 0;
-
         for (int b = 0; b < size; b++) //row
         {
             for (int a = 0; a < size; a++) //column
             {
                 if (displayedArray[b][a] == " ")
-                {
-                    
+                {   
                         cout << "a: " << a << endl;
-                        return a;
-                    
+                        return a; 
                 }
             }
         }
@@ -276,25 +272,109 @@ public:
 
     int LeftB()
     {
-        int secondBlank = 0;
-
         for (int b = 0; b < size; b++) //row
         {
             for (int a = 0; a < size; a++) //column
             {
                 if (displayedArray[b][a] == " ")
                 {
-                   
-
                         cout << "b: " << b << endl;
                         return b;
-                    
                 }
             }
         }
     }
 
-   
+    int RightA()
+    {
+        for (int b = size; b >= 0; b--) //row
+        {
+            for (int a = size; a >=0; a--) //column
+            {
+                if (displayedArray[b][a] == " ")
+                {
+                    cout << "a: " << a << endl;
+                    return a;
+                }
+            }
+        }
+    }
+
+    int RightB()
+    {
+        for (int b = size; b>=0; b--) //row
+        {
+            for (int a = size; a >=0; a--) //column
+            {
+                if (displayedArray[b][a] == " ")
+                {
+                    cout << "b: " << b << endl;
+                    return b;
+                }
+            }
+        }
+    }
+
+    int DownA()
+    {
+        for (int a = size; a >=0; a--) //column
+        {
+            for (int b = size; b >= 0; b--) //row
+            {
+                if (displayedArray[b][a] == " ")
+                {
+                    cout << "a: " << a << endl;
+                    return a;
+                }
+            }
+        }
+    }
+
+    int DownB()
+    {
+        for (int a = size; a >= 0; a--) //column
+        {
+            for (int b = size; b >= 0; b--) //row
+            {
+                if (displayedArray[b][a] == " ")
+                {
+                    cout << "b: " << b << endl;
+                    return b;
+                }
+            }
+        }
+    }
+
+    int UpA()
+    {
+        for (int a = 0; a <size ; a++) //column
+        {
+            for (int b = 0; b <size ; b++) //row
+            {
+                if (displayedArray[b][a] == " ")
+                {
+                    cout << "a: " << a << endl;
+                    return a;
+                }
+            }
+        }
+    }
+
+    int UpB()
+    {
+        for (int a = 0; a < size; a++) //column
+        {
+            for (int b = 0; b < size; b++) //row
+            {
+                if (displayedArray[b][a] == " ")
+                {
+                    cout << "b: " << a << endl;
+                    return b;
+                }
+            }
+        }
+    }
+
 
 
     void gameplay()
@@ -305,10 +385,18 @@ public:
         gridDisplay();
         int firstIndex = 0;
         int secondIndex = 0;
-        int initialA = 0;
-        int initialB = 0;
+        int initialLeftA = 0;
+        int initialLeftB = 0;
+
         int lastLeftA = LeftA();
         int lastLeftB = LeftB();
+        int lastRightA = RightA();
+        int lastRightB = RightB();
+        int lastDownA = DownA();
+        int lastDownB = DownB();
+        int lastUpA = UpA();
+        int lastUpB = UpB();
+
         int check = 0;
 
         if (check < 1)
@@ -326,8 +414,8 @@ public:
                         check++;
                         firstIndex = a;
                         secondIndex = b;
-                        initialA = a;
-                        initialB = b;
+                        initialLeftA = a;
+                        initialLeftB = b;
                     }
                 }
             }
@@ -344,13 +432,22 @@ public:
             switch (_getch())
             {
             case KEY_UP: //prioritize row
-                if (check < 1)
+                if (check < 1 && checker3)
                 {
                     int a = firstIndex;
                     int checker2 = 0;
 
                     for (int b = secondIndex; b >= 0 && check < 1; b--) //row
                     {
+
+                        if (displayedArray[lastUpB][lastUpA] == "X" || displayedArray[initialLeftB][initialLeftA] == "X")
+                        {
+                            checker3++;
+                            firstIndex = a;
+                            secondIndex = b;
+
+                            check++;
+                        }
 
                         if (displayedArray[b][firstIndex] == " ")
                         {
@@ -392,7 +489,7 @@ public:
                 break;
 
             case KEY_DOWN: ////prioritize row
-                if (check < 1)
+                if (check < 1  && checker3<1)
                 {
 
                     int a = firstIndex;
@@ -400,6 +497,17 @@ public:
 
                     for (int b = secondIndex; b < size && check < 1; b++) //row
                     {
+                        
+                        if (displayedArray[lastDownB][lastDownA] == "X")
+                        {
+                            checker3++;
+                            firstIndex = a;
+                            secondIndex = b;
+
+                            check++;
+                        }
+                        
+
                         if (displayedArray[b][firstIndex] == " ")
                         {
                             displayedArray[secondIndex][firstIndex] = " ";
@@ -450,16 +558,13 @@ public:
                     for (int a = firstIndex; a <size && check < 1; a--) //row (a used to be a<size)
                     { 
 
-                        if (displayedArray[lastLeftB][lastLeftA] == "X" || displayedArray[initialA][initialB] == "X")
+                        if (displayedArray[lastLeftB][lastLeftA] == "X" || displayedArray[initialLeftA][initialLeftB] == "X")
                         {
                             checker3++;
                             firstIndex = a;
                             secondIndex = b;
 
                             check++;
-                            cout << "This is a: " << a << endl;
-                            cout << "This is B: " << b << endl;
-                           
                         }
 
                         if (displayedArray[secondIndex][a] == " ")
@@ -521,13 +626,25 @@ public:
                 break;
 
             case KEY_RIGHT:
-                if (check < 1)
+                if (check < 1 && checker3 < 1)
                 {
                     int b = secondIndex;
                     int checker2 = 0;
 
                     for (int a = firstIndex; a < size && check < 1; a++) //row
                     {
+
+                        if (displayedArray[lastRightB][lastRightA] == "X")
+                        {
+                            checker3++;
+                            firstIndex = a;
+                            secondIndex = b;
+
+                            check++;
+                            cout << "This is a: " << a << endl;
+                            cout << "This is B: " << b << endl;
+                        }
+
                         if (displayedArray[secondIndex][a] == " ")
                         {
                             displayedArray[secondIndex][firstIndex] = " ";
@@ -654,6 +771,8 @@ public:
                                     check++;
                                     firstIndex = a;
                                     secondIndex = b;
+                                    initialLeftA = a;
+                                    initialLeftB = b;
                                 }
                             }
                         }
