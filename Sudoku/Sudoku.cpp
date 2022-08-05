@@ -1,4 +1,4 @@
-﻿#include <iostream>
+﻿#include "Sudoku.h"
 #include <string>
 #include <algorithm>
 #include <chrono>
@@ -23,25 +23,9 @@
 
 /*randomizing library*/
 #include <cstdlib>
-using namespace std;
 using namespace std::chrono;
 
-class gamePreparation
-{
-private:
-    //making the arrays strings will display blank spaces on the grid
-    string arrayNumbers[8][8];
-    string arrayBlanks[8][8]; //MAKE THIS DYNAMIC
-    string displayedArray[8][8]; //MAKE THIS DYNAMIC
-
-    int spaceArraysOptions[3];
-    int rowChecker = 0;
-    int size = 0;
-    
-
-public:
-
-    void setup()
+    void Game::setup()
     {
         /*SOMETHING ABOUT THE ORDER PREVENTS IT FROM RUNNING PROPERLY*/
         numberInitializer();
@@ -62,7 +46,7 @@ public:
         system("CLS");
     }
 
-    void sizeDifficulty()
+    void Game::sizeDifficulty()
     {
         int decision = 0;
 
@@ -105,7 +89,7 @@ public:
         }  
     }
 
-    void spaceDifficulty()
+    void Game::spaceDifficulty()
     {
         cout << "[Choose the number of blank spots you would like to solve on your grid]" << endl << endl;
         int spaces = 0; //user input  
@@ -139,7 +123,7 @@ public:
         }
     }
 
-    void displayAssignment()
+    void Game::displayAssignment()
     {
 
         for (int b = 0; b < size; b++) //row
@@ -151,7 +135,7 @@ public:
         }
     }
 
-    void blankAssignment(int difficulty)
+    void Game::blankAssignment(int difficulty)
     {
         int index1 = 0;
         int index2 = 0;
@@ -179,7 +163,7 @@ public:
         }
     }
 
-    void numberInitializer() //very helpful for debugging. Maybe necessary to help initialize though. 
+    void Game::numberInitializer() //very helpful for debugging. Maybe necessary to help initialize though. 
     {
         for (int b = 0; b < size; b++) //row
         {
@@ -190,7 +174,7 @@ public:
         }
     }
 
-    void blankInitializer() //very helpful for debugging. Maybe necessary to help initialize though. 
+    void Game::blankInitializer() //very helpful for debugging. Maybe necessary to help initialize though. 
     {
         for (int b = 0; b < size; b++) //row
         {
@@ -201,7 +185,7 @@ public:
         }
     }
 
-    void horizontalAssignment(int row) //at start, row is zero MAKE HORIZONTAL ARRAY DYNAMIC
+    void Game::horizontalAssignment(int row) //at start, row is zero MAKE HORIZONTAL ARRAY DYNAMIC
     {
         string horizontal[8] = {"1","2","3","4","5","6","7","8"};
         string* ptrHorizontal = new string[size]; //dynamic array
@@ -235,7 +219,7 @@ public:
         }
     }
 
-    void verticalChecker()
+    void Game::verticalChecker()
     {
         for (int column = 0; column < size; column++)
         {
@@ -255,7 +239,7 @@ public:
         }
     }
 
-    int LeftA()
+    int Game::LeftA()
     {
         for (int b = 0; b < size; b++) //row
         {
@@ -269,7 +253,7 @@ public:
         }
     }
 
-    int LeftB()
+    int Game::LeftB()
     {
         for (int b = 0; b < size; b++) //row
         {
@@ -283,7 +267,7 @@ public:
         }
     }
 
-    int RightA()
+    int Game::RightA()
     {
         for (int b = size; b >= 0; b--) //row
         {
@@ -297,7 +281,7 @@ public:
         }
     }
 
-    int RightB()
+    int Game::RightB()
     {
         for (int b = size; b>=0; b--) //row
         {
@@ -311,7 +295,7 @@ public:
         }
     }
 
-    int DownA()
+    int Game::DownA()
     {
         for (int a = size; a >=0; a--) //column
         {
@@ -325,7 +309,7 @@ public:
         }
     }
 
-    int DownB()
+    int Game::DownB()
     {
         for (int a = size; a >= 0; a--) //column
         {
@@ -339,7 +323,7 @@ public:
         }
     }
 
-    int UpA()
+    int Game::UpA()
     {
         for (int a = 0; a <size ; a++) //column
         {
@@ -353,7 +337,7 @@ public:
         }
     }
 
-    int UpB()
+    int Game::UpB()
     {
         for (int a = 0; a < size; a++) //column
         {
@@ -367,7 +351,7 @@ public:
         }
     }
 
-    void gameplay()
+    void Game::gameplay()
     {
 
         cout << endl << "    Let's begin your " << size<< "x" <<size<< " grid!" << string(4, '\n');
@@ -612,8 +596,6 @@ public:
                             secondIndex = b;
 
                             check++;
-                            cout << "This is a: " << a << endl;
-                            cout << "This is B: " << b << endl;
                         }
 
                         if (displayedArray[secondIndex][a] == " ")
@@ -757,7 +739,7 @@ public:
         system("CLS");
     } 
 
-    bool inputChecker()
+    bool Game::inputChecker()
     {
         for (int b = 0; b < size; b++) //row
         {
@@ -772,7 +754,7 @@ public:
         return true;
     }
 
-    void gridDisplay()
+    void Game::gridDisplay()
     {
         int i = 0; //column (x-axis)
         int j = 0; //row (y-axis)
@@ -828,7 +810,7 @@ public:
         } 
     }
 
-    void ending(int seconds)
+    void Game::ending(int seconds)
     {
         int minutes = seconds / 60;
         int hours = minutes / 60;
@@ -843,13 +825,11 @@ public:
         cout <<endl<< setw(50)<<"[Thanks for playing! Until next time]" << string(2,'\n');  
     }
 
-};
-
 int main() 
 {
     cout <<endl<< setw(40) << "\\(0_0)/  Hoi! " << endl<<endl;
 
-    gamePreparation round;
+    Game round;
     round.setup();
     auto start = high_resolution_clock::now();
     round.gameplay();
@@ -857,8 +837,6 @@ int main()
     auto duration = duration_cast<seconds>(stop - start);
     round.ending(duration.count());
     
-    
-   
     system("pause");
     return 0;
 }
