@@ -1,4 +1,5 @@
 ﻿#include "Sudoku.h"
+
 #include <string>
 #include <algorithm>
 #include <chrono>
@@ -825,18 +826,20 @@ using namespace std::chrono;
         cout <<endl<< setw(50)<<"[Thanks for playing! Until next time]" << string(2,'\n');  
     }
 
-int main() 
-{
-    cout <<endl<< setw(40) << "\\(0_0)/  Hoi! " << endl<<endl;
+    /*
+    int main()
+    {
+        cout << endl << setw(40) << "\\(0_0)/  Hoi! " << endl << endl;
 
-    Game round;
-    round.setup();
-    auto start = high_resolution_clock::now();
-    round.gameplay();
-    auto stop = high_resolution_clock::now();
-    auto duration = duration_cast<seconds>(stop - start);
-    round.ending(duration.count());
-    
-    system("pause");
-    return 0;
-}
+        Game round;
+        round.setup();
+        auto start = high_resolution_clock::now();
+        round.gameplay();
+        auto stop = high_resolution_clock::now();
+        auto duration = duration_cast<seconds>(stop - start);
+        round.ending(duration.count());
+
+        system("pause");
+        return 0;
+    }
+    */

@@ -1,4 +1,9 @@
 #pragma once
+
+#ifndef Sudoku_h
+#define Sudoku_h
+
+
 #include <iostream>
 using namespace std;
 
@@ -58,4 +63,5 @@ public:
     void ending(int seconds);
     
 };
+#endif
 
