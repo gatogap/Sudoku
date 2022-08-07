@@ -1,4 +1,6 @@
-﻿#include "Sudoku.h"
+﻿/*IMPLEMENTATION FILE*/
+
+#include "Sudoku.h"
 
 #include <string>
 #include <algorithm>
@@ -26,6 +28,8 @@
 #include <cstdlib>
 using namespace std::chrono;
 
+
+
     void Game::setup()
     {
         /*SOMETHING ABOUT THE ORDER PREVENTS IT FROM RUNNING PROPERLY*/
@@ -40,8 +44,11 @@ using namespace std::chrono;
             horizontalAssignment(countRow); //countRow is the line that will be compared with all the previous lines
             rowChecker = countRow + 1;
             verticalChecker();
+
+            displayAssignment(); //debugger
+            gridDisplay();  //debugger
         }
-        
+
         displayAssignment();
         spaceDifficulty();
         system("CLS");
@@ -66,6 +73,7 @@ using namespace std::chrono;
             spaceArraysOptions[0]= 4;
             spaceArraysOptions[1] = 8;
             spaceArraysOptions[2] = 12;
+            spaces = "---------------";
             break;
 
         case 2:
@@ -73,6 +81,7 @@ using namespace std::chrono;
             spaceArraysOptions[0] = 6;
             spaceArraysOptions[1] = 18;
             spaceArraysOptions[2] = 30;
+            spaces = "-----------------------";
             break;
 
         case 3:
@@ -80,6 +89,7 @@ using namespace std::chrono;
             spaceArraysOptions[0] = 8;
             spaceArraysOptions[1] = 36;
             spaceArraysOptions[2] = 49;
+            spaces = "-------------------------------";
             break;
 
         default:
@@ -803,7 +813,7 @@ using namespace std::chrono;
 
             if (j < size-1)
             {
-                cout << "-----------------------------------";
+                cout << spaces;
             }
             cout << endl;
             j++;
@@ -826,7 +836,7 @@ using namespace std::chrono;
         cout <<endl<< setw(50)<<"[Thanks for playing! Until next time]" << string(2,'\n');  
     }
 
-    /*
+    
     int main()
     {
         cout << endl << setw(40) << "\\(0_0)/  Hoi! " << endl << endl;
@@ -842,4 +852,5 @@ using namespace std::chrono;
         system("pause");
         return 0;
     }
-    */
+    
+    

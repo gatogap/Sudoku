@@ -1,8 +1,9 @@
+/*HEADER FILE*/
+
 #pragma once
 
 #ifndef Sudoku_h
 #define Sudoku_h
-
 
 #include <iostream>
 using namespace std;
@@ -14,6 +15,7 @@ private:
     string arrayBlanks[8][8];
     string displayedArray[8][8]; 
 
+    string spaces;
     int spaceArraysOptions[3];
     int rowChecker = 0;
     int size = 0;
