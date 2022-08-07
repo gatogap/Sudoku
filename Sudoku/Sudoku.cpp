@@ -2,6 +2,8 @@
 
 #include "Sudoku.h"
 
+#include <fstream>
+
 #include <string>
 #include <algorithm>
 #include <chrono>
@@ -29,10 +31,8 @@
 using namespace std::chrono;
 
 
-
     void Game::setup()
     {
-        /*SOMETHING ABOUT THE ORDER PREVENTS IT FROM RUNNING PROPERLY*/
         numberInitializer();
         blankInitializer();
         sizeDifficulty();
@@ -103,7 +103,7 @@ using namespace std::chrono;
     void Game::spaceDifficulty()
     {
         cout << "[Choose the number of blank spots you would like to solve on your grid]" << endl << endl;
-        int spaces = 0; //user input  
+        int spaces = 0; 
 
         cout << " 1) " << spaceArraysOptions[0]<< " Blank Slots" << endl;
         cout << " 2) " << spaceArraysOptions[1] << " Blank Slots" << endl;
@@ -136,7 +136,6 @@ using namespace std::chrono;
 
     void Game::displayAssignment()
     {
-
         for (int b = 0; b < size; b++) //row
         {
             for (int a = 0; a < size; a++) //column
@@ -196,20 +195,19 @@ using namespace std::chrono;
         }
     }
 
-    void Game::horizontalAssignment(int row) //at start, row is zero MAKE HORIZONTAL ARRAY DYNAMIC
+    void Game::horizontalAssignment(int row)
     {
         string horizontal[8] = {"1","2","3","4","5","6","7","8"};
-        string* ptrHorizontal = new string[size]; //dynamic array
+        string* ptrHorizontal = new string[size];
 
         for (int dynamicIndex = 0; dynamicIndex < size; dynamicIndex++)
         {
             ptrHorizontal[dynamicIndex] = horizontal[dynamicIndex];
-            //cout << ptrHorizontal[dynamicIndex];
         }
 
         /*------START OF ROW HERE-----*/
         int index = 0; //horizontal index
-        int a = 0; //column (x-axis
+        int a = 0; //column
 
         while (a < size) //column - x axis
         {
@@ -827,7 +825,7 @@ using namespace std::chrono;
         int hours = minutes / 60;
 
         cout << setw(40) << "( ^o^)/\\(^_^ )" << string(2, '\n');
-        cout << setw(45) << "YAYAYA! You finished it in " << hours<<":"<<minutes%60<<":"<<seconds%60<< string(2, '\n'); // set stopwatch to m:s
+        cout << setw(45) << "YAYAYA! You finished it in " << hours<<":"<<minutes%60<<":"<<seconds%60<< string(2, '\n');
         cout << setw(60) << "~~~Last 5 highest scores for this difficulty setting~~~" << endl;
 
 
@@ -836,9 +834,53 @@ using namespace std::chrono;
         cout <<endl<< setw(50)<<"[Thanks for playing! Until next time]" << string(2,'\n');  
     }
 
+    bool comparator(string a, string b)
+    {
+        return a < b;
+    }
     
     int main()
     {
+
+            string time;
+            string lineArray[5];
+
+            ifstream fin("Size 4.txt");   //reads file
+
+            /*Unsorted Original File*/
+            for (int l = 0; l < 5; l++)
+            {
+                getline(fin, time);
+                lineArray[l] = time;
+                cout << lineArray[l] << endl;
+            }
+            cout << endl;
+            fin.close();//closing last file.
+
+            
+            ofstream fout("Size 4.txt"); //displays content in file
+
+
+            //numerical Order
+
+            sort(lineArray, lineArray + 5, comparator);
+
+            for (int i = 0; i < 5; i++)
+            {
+                cout << lineArray[i] << " \n";
+                fout << lineArray[i] << endl;
+            }
+
+            cout << endl << endl;
+
+            fout.close();
+            
+          
+
+
+
+
+        /*
         cout << endl << setw(40) << "\\(0_0)/  Hoi! " << endl << endl;
 
         Game round;
@@ -848,6 +890,8 @@ using namespace std::chrono;
         auto stop = high_resolution_clock::now();
         auto duration = duration_cast<seconds>(stop - start);
         round.ending(duration.count());
+
+        */
 
         system("pause");
         return 0;
