@@ -45,8 +45,8 @@ using namespace std::chrono;
             rowChecker = countRow + 1;
             verticalChecker();
 
-            displayAssignment(); //debugger
-            gridDisplay();  //debugger
+            //displayAssignment(); //debugger
+            //gridDisplay();  //debugger
         }
 
         displayAssignment();
@@ -411,7 +411,7 @@ using namespace std::chrono;
         int value = key;
 
         //while entire grid is not complete, run the switch statement
-        while (inputChecker() == false) //fix the issue of changing the slots at the very edges at a = 8
+        while (inputChecker())
         {
             int checker3 = 0;
             switch (_getch())
@@ -756,13 +756,13 @@ using namespace std::chrono;
         {
             for (int a = 0; a < size; a++) //column
             {
-                if (displayedArray[b][a] != arrayNumbers[b][a])
+                if (displayedArray[b][a] == " " || displayedArray[b][a] == "X")
                 {
-                    return false;
+                    return true;
                 }
             }
         }
-        return true;
+        return false;
     }
 
     void Game::gridDisplay()
