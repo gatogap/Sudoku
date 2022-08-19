@@ -821,6 +821,7 @@ void Game::gridDisplay()
 
 void Game::ending(int seconds)
 {
+    delete ptrHorizontal[];
     int minutes = seconds / 60;
     int hours = minutes / 60;
 
@@ -843,15 +844,29 @@ bool comparator(string a, string b)
     return a < b;
 }
 
+
+void function() 
+{
+
+    ofstream fout("Size 4.txt"); //displays content in file
+
+    fout << "40:50:03";
+
+    fout.close();
+}
+
 int main()
 {
 
+    string comparableTime = "01:04:21";
     string time;
     string lineArray[6];
+    lineArray[5] = comparableTime; //last line
+
 
     ifstream fin("Size 4.txt");   //reads file
-            /*Unsorted Original File*/
-    for (int l = 0; l < 6; l++)
+
+    for (int l = 0; l < 5; l++) //counts information from the first row till the 5th line
     {
         getline(fin, time);
         lineArray[l] = time;
@@ -861,17 +876,12 @@ int main()
     fin.close();//closing last file.
 
 
-
     ofstream fout("Size 4.txt"); //displays content in file
     //numerical Order
 
-    fout << "06:50:31 \n";
-
     sort(lineArray, lineArray + 6, comparator);
 
-
-
-    for (int i = 0; i < 6; i++)
+    for (int i = 0; i < 5; i++)
     {
         cout << lineArray[i] << " \n";
         fout << lineArray[i] << endl;
@@ -880,8 +890,6 @@ int main()
     cout << endl << endl;
 
     fout.close();
-
-
 
 
 
