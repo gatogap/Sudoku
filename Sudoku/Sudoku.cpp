@@ -3,7 +3,7 @@
 #include "Sudoku.h"
 
 #include <fstream>
-
+#include <stdio.h> //digits format 00:00:00
 #include <string>
 #include <algorithm>
 #include <chrono>
@@ -199,6 +199,7 @@ void Game::horizontalAssignment(int row)
 {
     string horizontal[8] = { "1","2","3","4","5","6","7","8" };
     string* ptrHorizontal = new string[size];
+    
 
     for (int dynamicIndex = 0; dynamicIndex < size; dynamicIndex++)
     {
@@ -226,6 +227,8 @@ void Game::horizontalAssignment(int row)
             a++;
         }
     }
+
+    delete [] ptrHorizontal; //might have to remove
 }
 
 void Game::verticalChecker()
@@ -819,15 +822,22 @@ void Game::gridDisplay()
     }
 }
 
-void Game::ending(int seconds)
+void Game::ending(int second)
 {
-    delete ptrHorizontal[];
-    int minutes = seconds / 60;
+    int seconds = (second / 60) % 60;
+    int minutes = (seconds / 60) %60;
     int hours = minutes / 60;
 
     cout << setw(40) << "( ^o^)/\\(^_^ )" << string(2, '\n');
-    cout << setw(45) << "YAYAYA! You finished it in " << hours << ":" << minutes % 60 << ":" << seconds % 60 << string(2, '\n');
+    cout << setw(45) << "YAYAYA! You finished it in ";
+    printf("%02d : %02d : %02d\n", hours, minutes, seconds);
     
+    //ofstream fout("RecordedRecord.txt");
+    FILE* fp;
+    fp = fopen("RecordedRecord.txt","w");
+    fprintf(fp,"%02d : %02d : %02d\n", hours, minutes, seconds);
+    fclose(fp);
+
 
 
     /*Scores*/
@@ -844,24 +854,34 @@ bool comparator(string a, string b)
     return a < b;
 }
 
-
-void function() 
-{
-
-    ofstream fout("Size 4.txt"); //displays content in file
-
-    fout << "40:50:03";
-
-    fout.close();
-}
-
 int main()
 {
 
-    string comparableTime = "01:04:21";
+    cout << endl << setw(40) << "\\(0_0)/  Hoi! " << endl << endl;
+
+    Game round;
+    round.setup();
+    auto start = high_resolution_clock::now();
+    round.gameplay();
+    auto stop = high_resolution_clock::now();
+    auto duration = duration_cast<seconds>(stop - start);
+    round.ending(duration.count());
+
+
+
+
+
+    string comparableTime;
     string time;
     string lineArray[6];
-    lineArray[5] = comparableTime; //last line
+
+    /*read from file to compare recorded time to prior top 5 records*/
+    ifstream infile("RecordedRecord.txt");
+        getline(infile, comparableTime);
+        lineArray[5] = comparableTime;
+        infile.close();
+
+
 
 
     ifstream fin("Size 4.txt");   //reads file
@@ -890,22 +910,6 @@ int main()
     cout << endl << endl;
 
     fout.close();
-
-
-
-
-    /*
-    cout << endl << setw(40) << "\\(0_0)/  Hoi! " << endl << endl;
-
-    Game round;
-    round.setup();
-    auto start = high_resolution_clock::now();
-    round.gameplay();
-    auto stop = high_resolution_clock::now();
-    auto duration = duration_cast<seconds>(stop - start);
-    round.ending(duration.count());
-
-    */
 
     system("pause");
     return 0;
