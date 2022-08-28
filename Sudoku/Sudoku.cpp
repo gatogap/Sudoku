@@ -898,6 +898,7 @@ void Game::timeRecords()
     fout.close();
 }
 
+/*
 int main()
 {
 
@@ -915,4 +916,5 @@ int main()
     system("pause");
     return 0;
 }
+*/
 
