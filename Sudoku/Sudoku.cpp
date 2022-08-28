@@ -7,6 +7,8 @@
 #include <string>
 #include <algorithm>
 #include <chrono>
+#include <cstdio> //for FILE function
+#include <process.h> //for FILE function
 
 /*keyboard interaction*/
 #include <conio.h> 
@@ -824,20 +826,19 @@ void Game::gridDisplay()
 
 void Game::ending(int second)
 {
-    int seconds = (second / 60) % 60;
+    int seconds = second %60;
     int minutes = (seconds / 60) %60;
     int hours = minutes / 60;
 
     cout << setw(40) << "( ^o^)/\\(^_^ )" << string(2, '\n');
     cout << setw(45) << "YAYAYA! You finished it in ";
-    printf("%02d : %02d : %02d\n", hours, minutes, seconds);
+    printf("%02d : %02d : %02d\n", hours, minutes, seconds % 60);
     
-    //ofstream fout("RecordedRecord.txt");
-    FILE* fp;
-    fp = fopen("RecordedRecord.txt","w");
-    fprintf(fp,"%02d : %02d : %02d\n", hours, minutes, seconds);
-    fclose(fp);
 
+    FILE* pRecordFile; //overwrites latest recorded time
+    fopen_s(&pRecordFile, "RecordedRecord.txt", "w+");
+    fprintf(pRecordFile, "%02d : %02d : %02d\n", hours, minutes, seconds);
+    fclose(pRecordFile);
 
 
     /*Scores*/
@@ -868,9 +869,6 @@ int main()
     round.ending(duration.count());
 
 
-
-
-
     string comparableTime;
     string time;
     string lineArray[6];
@@ -882,8 +880,6 @@ int main()
         infile.close();
 
 
-
-
     ifstream fin("Size 4.txt");   //reads file
 
     for (int l = 0; l < 5; l++) //counts information from the first row till the 5th line
@@ -892,12 +888,12 @@ int main()
         lineArray[l] = time;
         cout << lineArray[l] << endl;
     }
+    cout << lineArray[5] << endl;
     cout << endl;
     fin.close();//closing last file.
 
 
-    ofstream fout("Size 4.txt"); //displays content in file
-    //numerical Order
+    ofstream fout("Size 4.txt"); //writes and displays content in file in numerical order
 
     sort(lineArray, lineArray + 6, comparator);
 
