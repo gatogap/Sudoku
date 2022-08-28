@@ -14,8 +14,11 @@ private:
     string arrayNumbers[8][8];
     string arrayBlanks[8][8];
     string displayedArray[8][8]; 
+     string spaces;
 
-    string spaces;
+    string fileSize;
+    string fileSpaces;
+
     int spaceArraysOptions[3];
     int rowChecker = 0;
     int size = 0;
@@ -63,7 +66,9 @@ public:
     void gridDisplay();
     
     void ending(int seconds);
-    
+
+    void timeRecords();
+
 };
 #endif
 

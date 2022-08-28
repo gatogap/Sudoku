@@ -5,6 +5,7 @@
 #include <fstream>
 #include <stdio.h> //digits format 00:00:00
 #include <string>
+#include <sstream> //to make cout functions into strings
 #include <algorithm>
 #include <chrono>
 #include <cstdio> //for FILE function
@@ -72,6 +73,7 @@ void Game::sizeDifficulty()
     {
     case 1:
         size = 4;
+        fileSize = "4";
         spaceArraysOptions[0] = 4;
         spaceArraysOptions[1] = 8;
         spaceArraysOptions[2] = 12;
@@ -80,6 +82,7 @@ void Game::sizeDifficulty()
 
     case 2:
         size = 6;
+        fileSize = "6";
         spaceArraysOptions[0] = 6;
         spaceArraysOptions[1] = 18;
         spaceArraysOptions[2] = 30;
@@ -88,6 +91,7 @@ void Game::sizeDifficulty()
 
     case 3:
         size = 8;
+        fileSize = "8";
         spaceArraysOptions[0] = 8;
         spaceArraysOptions[1] = 36;
         spaceArraysOptions[2] = 49;
@@ -117,14 +121,17 @@ void Game::spaceDifficulty()
     switch (spaces)
     {
     case 1:
+        fileSpaces = ".1";
         blankAssignment(spaceArraysOptions[0]);
         break;
 
     case 2:
+        fileSpaces = ".2";
         blankAssignment(spaceArraysOptions[1]);
         break;
 
     case 3:
+        fileSpaces = ".3";
         blankAssignment(spaceArraysOptions[2]);
         break;
 
@@ -826,14 +833,14 @@ void Game::gridDisplay()
 
 void Game::ending(int second)
 {
-    int seconds = second %60;
-    int minutes = (seconds / 60) %60;
+    int seconds = second % 60;
+    int minutes = (seconds / 60) % 60;
     int hours = minutes / 60;
 
     cout << setw(40) << "( ^o^)/\\(^_^ )" << string(2, '\n');
     cout << setw(45) << "YAYAYA! You finished it in ";
     printf("%02d : %02d : %02d\n", hours, minutes, seconds % 60);
-    
+
 
     FILE* pRecordFile; //overwrites latest recorded time
     fopen_s(&pRecordFile, "RecordedRecord.txt", "w+");
@@ -848,11 +855,47 @@ void Game::ending(int second)
     //insert txt.file here. Refer to elimination of older records & insertion of new records
 
     cout << endl << setw(50) << "[Thanks for playing! Until next time]" << string(2, '\n');
-}
+};
 
-bool comparator(string a, string b)
+void Game::timeRecords()
 {
-    return a < b;
+    string comparableTime;
+    string time;
+    string lineArray[6];
+
+    /*read from file to compare recorded time to prior top 5 records*/
+    ifstream infile("RecordedRecord.txt");
+    getline(infile, comparableTime);
+    lineArray[5] = comparableTime;
+    infile.close();
+
+    stringstream file;
+    file << "Size " << fileSize << fileSpaces<< ".txt";
+
+    ifstream fin(file.str());   //reads file
+
+    for (int l = 0; l < 5; l++) //counts information from the first row till the 5th line
+    {
+        getline(fin, time);
+        lineArray[l] = time;
+    }
+    cout << endl;
+    fin.close();//closing last file.
+
+
+    ofstream fout(file.str()); //writes and displays content in file in numerical order
+
+    sort(lineArray, lineArray + 6);
+
+    for (int i = 0; i < 5; i++)
+    {
+        cout << lineArray[i] << " \n";
+        fout << lineArray[i] << endl;
+    }
+
+    cout << endl << endl;
+
+    fout.close();
 }
 
 int main()
@@ -867,45 +910,7 @@ int main()
     auto stop = high_resolution_clock::now();
     auto duration = duration_cast<seconds>(stop - start);
     round.ending(duration.count());
-
-
-    string comparableTime;
-    string time;
-    string lineArray[6];
-
-    /*read from file to compare recorded time to prior top 5 records*/
-    ifstream infile("RecordedRecord.txt");
-        getline(infile, comparableTime);
-        lineArray[5] = comparableTime;
-        infile.close();
-
-
-    ifstream fin("Size 4.txt");   //reads file
-
-    for (int l = 0; l < 5; l++) //counts information from the first row till the 5th line
-    {
-        getline(fin, time);
-        lineArray[l] = time;
-        cout << lineArray[l] << endl;
-    }
-    cout << lineArray[5] << endl;
-    cout << endl;
-    fin.close();//closing last file.
-
-
-    ofstream fout("Size 4.txt"); //writes and displays content in file in numerical order
-
-    sort(lineArray, lineArray + 6, comparator);
-
-    for (int i = 0; i < 5; i++)
-    {
-        cout << lineArray[i] << " \n";
-        fout << lineArray[i] << endl;
-    }
-
-    cout << endl << endl;
-
-    fout.close();
+    round.timeRecords();
 
     system("pause");
     return 0;
